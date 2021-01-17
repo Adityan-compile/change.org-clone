@@ -1,0 +1,27 @@
+{
+  "name": "change.org-clone",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www",
+    "dev-server": "nodemon ./bi/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^8.2.0",
+    "email-check": "^1.1.0",
+    "email-validator": "^2.0.4",
+    "express": "~4.16.1",
+    "express-handlebars": "^5.2.0",
+    "express-session": "^1.17.1",
+    "hbs": "^4.1.1",
+    "http-errors": "~1.6.3",
+    "mongodb": "^3.6.3",
+    "morgan": "~1.9.1",
+    "promise": "^8.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
