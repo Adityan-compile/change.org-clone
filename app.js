@@ -6,6 +6,8 @@ var session = require("express-session");
 var logger = require("morgan");
 var hbs = require("express-handlebars");
 var Promise = require("promise");
+var passport = require("passport");
+var googleStrategy = require("passport-google-oauth20");
 
 env = require("dotenv").config();
 
@@ -49,9 +51,23 @@ app.use(
 		cookie: {
 			maxAge: 2592000000,
 		},
-		saveUninitialized: true,
+		saveUninitialized: false,
 		resave: true,
 	})
+);
+
+// Setup passport google 0auth.
+passport.use(
+	new googleStrategy(
+		{
+			clientID: process.env.GOOGLE_API_KEY,
+			clientSecret: process.env.GOOGLE_KEY_SECRET,
+			callbackURL: "/",
+		},
+		(accessToken, refreshToken, profile, done) => {
+			console.log('callback fired');
+		}
+	)
 );
 
 app.use(express.static(path.join(__dirname, "public")));

@@ -1,8 +1,7 @@
 module.exports={
 
-    PROJECT_COLLECTION:'projects',
+    PETITION_COLLECTION:'projects',
     USER_COLLECTION:'users',
-    ISSUE_COLLECTION:'issues'
     
 }
 
