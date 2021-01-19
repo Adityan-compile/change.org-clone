@@ -18,7 +18,7 @@ module.exports = {
 	// 				response.err = err;
 	// 				resolve(response);
 	// 			});
-	// 	});
+	// 	});	
 	// }
 
 	findUser: (id) =>{
@@ -32,7 +32,16 @@ module.exports = {
                 }else{
                 	resolve("user does not exist");
                 }
-		})
+		});
+	},
+
+	insertUser:(data)=>{
+		return new Promise(async (resolve, reject) => {
+
+			db.get().collection(collections.USER_COLLECTION).insertOne(data).then((response)=>{
+				resolve(response.ops[0]);
+			})
+		});
 	}
 
 };
