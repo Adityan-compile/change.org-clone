@@ -1,15 +1,123 @@
-  <header>
+<header class="text-white">
+  <!-- Navbar -->
+  <nav
+    class="navbar navbar-expand-lg navbar-light text-white p-2"
+    style="background-color: #ff1744"
+  >
+    <!-- Container wrapper -->
+    <div class="container-fluid text-white">
+      <!-- Navbar brand -->
+      <a class="navbar-brand" href="#">
+        <span class="fw-bold text-white">{{title}}</span>
+      </a>
 
-  <nav>
-    <div>
-      <ul>
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">JavaScript</a></li>
-      </ul>
+      <!-- Toggle button -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-mdb-toggle="collapse"
+        data-mdb-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <!-- Left links -->
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active text-white" aria-current="page" href="#"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active text-white" href="#">Link</a>
+          </li>
+        </ul>
+        <!-- Left links -->
+
+        <!-- Search form -->
+        {{!--
+        <form class="d-flex input-group text-white w-auto">
+          <input
+            type="search"
+            class="form-control"
+            placeholder="Search for Petitions"
+            aria-label="Search"
+          />
+          <button
+            class="btn btn-outline-light"
+            type="button"
+            data-mdb-ripple-color="dark"
+          >
+            Search
+          </button>
+        </form>
+        --}}
+
+        <!-- Navbar dropdown -->
+
+        <ul
+          class="ml-auto mt-1"
+          style="list-style-type: none; margin-right: 2rem"
+        >
+          <li class="nav-item dropdown ml-auto">
+            <a
+              class="nav-link active text-white dropdown-toggle"
+              href="#"
+              id="navbarDropdown"
+              role="button"
+              data-mdb-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Petitions
+            </a>
+            <!-- Dropdown menu -->
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="#">Start a Petition</a></li>
+              <li><a class="dropdown-item" href="#">Sign a Petition</a></li>
+              <li><hr class="dropdown-divider" /></li>
+              <li>
+                <a class="dropdown-item" href="#"></a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <!-- Collapsible wrapper -->
     </div>
+    <!-- Container wrapper -->
   </nav>
+  <!-- Navbar -->
 </header>
 
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!-- Home  -->
+<section class="text-center text-white home p-4 fw-bold">
+  <h4 class="home-text p-4 mb-2">Let's bring change to the world.</h4>
+  <a href="#" class="home-text btn btn-outline-light mb-2">Start a Petition</a>
+</section>
+
+<!-- Petitions -->
+<section class="petitions p-4">
+  <h4 class="text-center p-4 mb-2">PETITIONS</h4>
+
+  <div class="container">
+    <div class="card text-center">
+      <div class="card-body">
+        <h5 class="card-title">Petiton</h5>
+        <p class="card-text">
+          With supporting text below as a natural lead-in to additional content.
+        </p>
+        <a href="#" class="btn btn-danger mx-auto">Sign this Petiton</a>
+      </div>
+      <div class="card-footer text-muted">
+        <span>2 days ago</span>
+
+        <span>20 Supporters</span>
+      </div>
+    </div>
+  </div>
+</section>
