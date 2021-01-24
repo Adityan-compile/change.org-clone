@@ -1,5 +1,6 @@
 :root{
   --theme: #ff1744;
+  --white: #ffffff;
 }
 
 body {
@@ -18,6 +19,27 @@ body {
 	animation: slideInFromLeft 1s ease-in;
 }
 
+.goal{
+	margin-left: 12rem;
+}
+
+.footer a{
+  text-decoration: none;
+  color: var(--white);
+}
+
+.footer h1,p{
+  color: var(--white);
+}
+
+.grid{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
 
 
 /* Animations */
@@ -41,4 +63,33 @@ body {
     transform: translateX(0);
   }
   
+}
+
+/* Media Queries */
+@media(max-width:768px){
+	.goal{
+		margin-left: 20rem;
+	}
+}
+
+@media(min-width: 1200px){
+
+	.goal{
+		margin-left: 51rem;
+	}
+
+}
+
+@media(max-width: 439px){
+
+	.goal{
+		margin-left: 7rem;
+	}
+
+}
+
+@media(max-width: 438px){
+	.goal{
+		margin-left: 6rem;
+	}
 }

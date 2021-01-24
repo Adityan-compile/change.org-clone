@@ -1,123 +1,48 @@
-<header class="text-white">
-  <!-- Navbar -->
-  <nav
-    class="navbar navbar-expand-lg navbar-light text-white p-2"
-    style="background-color: #ff1744"
-  >
-    <!-- Container wrapper -->
-    <div class="container-fluid text-white">
-      <!-- Navbar brand -->
-      <a class="navbar-brand" href="#">
-        <span class="fw-bold text-white">{{title}}</span>
-      </a>
-
-      <!-- Toggle button -->
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-mdb-toggle="collapse"
-        data-mdb-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <i class="fas fa-bars"></i>
-      </button>
-
-      <!-- Collapsible wrapper -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Left links -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active text-white" aria-current="page" href="#"
-              >Home</a
-            >
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active text-white" href="#">Link</a>
-          </li>
-        </ul>
-        <!-- Left links -->
-
-        <!-- Search form -->
-        {{!--
-        <form class="d-flex input-group text-white w-auto">
-          <input
-            type="search"
-            class="form-control"
-            placeholder="Search for Petitions"
-            aria-label="Search"
-          />
-          <button
-            class="btn btn-outline-light"
-            type="button"
-            data-mdb-ripple-color="dark"
-          >
-            Search
-          </button>
-        </form>
-        --}}
-
-        <!-- Navbar dropdown -->
-
-        <ul
-          class="ml-auto mt-1"
-          style="list-style-type: none; margin-right: 2rem"
-        >
-          <li class="nav-item dropdown ml-auto">
-            <a
-              class="nav-link active text-white dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-mdb-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Petitions
-            </a>
-            <!-- Dropdown menu -->
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Start a Petition</a></li>
-              <li><a class="dropdown-item" href="#">Sign a Petition</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li>
-                <a class="dropdown-item" href="#"></a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <!-- Collapsible wrapper -->
-    </div>
-    <!-- Container wrapper -->
-  </nav>
-  <!-- Navbar -->
-</header>
+{{!-- {{#> header}} --}}
+  <header class="text-white">
+      {{> header}}
+  </header>
+{{!-- {{/header}} --}}
 
 <!-- Home  -->
 <section class="text-center text-white home p-4 fw-bold">
-  <h4 class="home-text p-4 mb-2">Let's bring change to the world.</h4>
-  <a href="#" class="home-text btn btn-outline-light mb-2">Start a Petition</a>
+  <h3 class="p-4 mb-2 home-text">Let's bring change to the world.</h3>
+{{!--   <a href="/petitions/new" class=" home-text btn btn-outline-light mb-2">Start a Petition</a> --}}
+{{> form}}
 </section>
 
 <!-- Petitions -->
 <section class="petitions p-4">
   <h4 class="text-center p-4 mb-2">PETITIONS</h4>
 
-  <div class="container">
-    <div class="card text-center">
+<div class="row mb-5">
+  <div class="col-sm-10 offset-sm-1">
+    <div class="card shadow-sm">
       <div class="card-body">
-        <h5 class="card-title">Petiton</h5>
-        <p class="card-text">
-          With supporting text below as a natural lead-in to additional content.
-        </p>
-        <a href="#" class="btn btn-danger mx-auto">Sign this Petiton</a>
+        <h3 class="card-title">One Signature Goal</h3>
+        <p class="card-text text-dark">Petition with 1-signature goal!
+
+Donec id elit non mi porta gravida at eget metusSed posuere consectetur est at lobortisSed posuere consectetur est at lobortisDonec sed odio dui.
+
+Morbi leo risus, porta ac consectetur ac, vestibulum at erosInteger posuere erat a ante venenatis dapibus posuere velit aliquetLorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+        
+        <p class="card-text"><span class="text-muted">&mdash; Nov 18,  5:31 PM</span></p>
+            <a class="btn btn-danger btn-block" href="/petitions/163">Sign this petition</a>
       </div>
       <div class="card-footer text-muted">
-        <span>2 days ago</span>
-
-        <span>20 Supporters</span>
+        <span classs="supporters mr-auto">1 supporters</span>
+        <span class="goal">Goal: 2 Supporters</span>
+<div class="progress">
+  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
       </div>
     </div>
   </div>
+
 </section>
+
+
+<!-- Footer -->
+<footer class="footer bg-dark p-4 py-5">
+  {{> footer}}
+</footer>

@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var logger = require("morgan");
 var hbs = require("express-handlebars");
+const { flash } = require('express-flash-message');
 var Promise = require("promise");
 
 env = require("dotenv").config();
@@ -17,7 +18,7 @@ if (env.error) {
 }
 
 var indexRouter = require("./routes/index");
-var usersRouter = require("./routes/users");
+var petitionsRouter = require("./routes/petitions");
 
 // Configure db
 var db = require("./config/connection");
@@ -54,6 +55,9 @@ app.use(
 	})
 );
 
+// apply express-flash-message middleware
+app.use(flash({ sessionKeyName: 'flashMessage' }));
+
 // // Setup passport google 0auth.
 // passport.use(
 // 	new googleStrategy(
@@ -84,7 +88,7 @@ db.connect((err) => {
 });
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/petitions", petitionsRouter);
 
 // catch error and forward to error handler
 app.use(function (req, res, next) {
@@ -112,10 +116,9 @@ app.use(function (err, req, res, next) {
 	// set locals, only providing error in development
 	res.locals.message = err.message;
 	res.locals.error = req.app.get("env") === "development" ? err : {};
-
 	// render the error page
 	res.status(err.status || 500);
-	res.render("error");
+	res.render("error", {layout: false});
 });
 
 module.exports = app;

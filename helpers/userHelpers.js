@@ -19,29 +19,29 @@ module.exports = {
 					resolve(response);
 				});
 		});	
-	},
-
-	findUser: (id) =>{
-		return new Promise(async (resolve, reject)=>{
-               let user = await db
-                          .get()
-                          .collection(collections.USER_COLLECTION)
-                          .findOne({"_id":objectId(id)});
-                if(user){
-                	resolve("user exists");
-                }else{
-                	resolve("user does not exist");
-                }
-		});
-	},
-
-	insertUser:(data)=>{
-		return new Promise(async (resolve, reject) => {
-
-			db.get().collection(collections.USER_COLLECTION).insertOne(data).then((response)=>{
-				resolve(response.ops[0]);
-			})
-		});
 	}
+	
+	// findUser: (id) =>{
+	// 	return new Promise(async (resolve, reject)=>{
+ //               let user = await db
+ //                          .get()
+ //                          .collection(collections.USER_COLLECTION)
+ //                          .findOne({"_id":objectId(id)});
+ //                if(user){
+ //                	resolve("user exists");
+ //                }else{
+ //                	resolve("user does not exist");
+ //                }
+	// 	});
+	// },
+
+	// insertUser:(data)=>{
+	// 	return new Promise(async (resolve, reject) => {
+
+	// 		db.get().collection(collections.USER_COLLECTION).insertOne(data).then((response)=>{
+	// 			resolve(response.ops[0]);
+	// 		})
+	// 	});
+	// }
 
 };
