@@ -1,6 +1,6 @@
 module.exports={
 
-    PETITION_COLLECTION:'petitons',
+    PETITION_COLLECTION:'petitions',
     USER_COLLECTION:'users',
     
 }

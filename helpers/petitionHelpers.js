@@ -31,16 +31,14 @@ module.exports = {
 		});
 	},
 
-	getPetitions: () => {
+	getLimitedPetitions: () => {
 		return new Promise(async (resolve, reject) => {
-			await db.get
+			var petitions = await db
+				.get()
 				.collection(collections.PETITION_COLLECTION)
 				.find()
-				.sort({ _id: -1 })
-				.limit(5)
-				.then((response) => {
-					resolve(data.ops[0]);
-				});
+				.toArray();
+			resolve(petitions);
 		});
 	},
 };
