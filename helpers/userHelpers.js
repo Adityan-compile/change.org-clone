@@ -2,7 +2,6 @@ var emailCheck = require("email-check");
 var db = require("../config/connection");
 var collections = require("../config/collections");
 
-
 module.exports = {
 
 	validate: (email) => {
@@ -18,30 +17,62 @@ module.exports = {
 					response.err = err;
 					resolve(response);
 				});
-		});	
-	}
-	
-	// findUser: (id) =>{
-	// 	return new Promise(async (resolve, reject)=>{
- //               let user = await db
- //                          .get()
- //                          .collection(collections.USER_COLLECTION)
- //                          .findOne({"_id":objectId(id)});
- //                if(user){
- //                	resolve("user exists");
- //                }else{
- //                	resolve("user does not exist");
- //                }
-	// 	});
-	// },
+		});
+	},
 
-	// insertUser:(data)=>{
-	// 	return new Promise(async (resolve, reject) => {
+	signUp: (userData) => {
+		return new Promise(async (resolve, reject) => {
+			userData.password = await bcrypt.hash(userData.password, 10);
 
-	// 		db.get().collection(collections.USER_COLLECTION).insertOne(data).then((response)=>{
-	// 			resolve(response.ops[0]);
-	// 		})
-	// 	});
-	// }
+			db.get()
+				.collection(collections.USER_COLLECTION)
+				.insertOne(userData)
+				.then((data) => {
+					resolve(data.ops[0]);
+				});
+		});
+	},
 
+	login: (data) => {
+		return new Promise(async (resolve, reject) => {
+			let loggedIn = false;
+			let response = {};
+			let user = await db
+				.get()
+				.collection(collections.USER_COLLECTION)
+				.findOne({ email: data.email });
+			if (user) {
+				bcrypt.compare(data.password, user.password).then((status) => {
+					if (status) {
+						response.user = user;
+						response.status = true;
+						resolve(response);
+					} else {
+						resolve({ status: false });
+					}
+				});
+			} else {
+				resolve({ status: false });
+			}
+		});
+	},
+
+	deleteUser: (userId) => {
+		return new Promise(async (resolve, reject) => {
+			let status = false;
+			await db
+				.get()
+				.collection(collections.USER_COLLECTION)
+				.deleteOne({ _id: ObjectId(userId) })
+				.then((res) => {
+					console.log(res);
+					if (res.acknowledged && res.deletedCount == "1") {
+						status = true;
+						resolve(status);
+					} else {
+						resolve(status);
+					}
+				});
+		});
+	},
 };
