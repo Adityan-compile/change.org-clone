@@ -20,6 +20,7 @@ module.exports = {
 			let today = date + "/" + month + "/" + year;
 
 			data.dateCreated = today;
+			data.signed = 1;
 
 			await db
 				.get()
@@ -27,6 +28,32 @@ module.exports = {
 				.insertOne(data)
 				.then((response) => {
 					resolve(response.ops[0]);
+				});
+		});
+	},
+
+/* 
+  TODO:
+  [] Allow one user to sign a petition only once.
+  [] Maintain a seperate collection for signed petitions.
+*/
+
+	signPetition: (id) => {
+		return new Promise(async (resolve, reject) => {
+			await db
+				.get()
+				.collection(collections.PETITION_COLLECTION)
+				.update(
+					{
+						_id: ObjectId(id),
+					},
+					{
+						$inc: {
+							signed: 1,
+						},
+					}
+				).then((response)=>{
+					console.log(response);
 				});
 		});
 	},

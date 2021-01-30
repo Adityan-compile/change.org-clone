@@ -8,7 +8,18 @@
 <section class="text-center text-white home p-4 fw-bold">
   <h3 class="p-4 mb-2 home-text">Let's bring change to the world.</h3>
 {{!--   <a href="/petitions/new" class=" home-text btn btn-outline-light mb-2">Start a Petition</a> --}}
+
+{{#if loggedIn}}
+
 {{> form}}
+
+{{else}}
+
+<a href="/signup" class=" home-text btn btn-outline-light">Sign Up</a> 
+<a href="/login" class=" home-text btn btn-outline-light">Login</a> 
+
+{{/if}}
+
 </section>
 
 <!-- Petitions -->
@@ -16,42 +27,8 @@
   <h4 class="text-center p-4 mb-2">PETITIONS</h4>
 
 {{#each petitions}}
-{{!-- <div class="row mb-5">
-  <div class="col-sm-10 offset-sm-1">
-    <div class="card shadow-sm">
-      <div class="card-body">
-        <h3 class="card-title">{{this.title}}</h3>
-        <p class="card-text text-dark">{{this.description}}</p>
-        
-        <p class="card-text"><span class="text-muted">&mdash; {{this.dateCreated}}</span></p>
-            <a class="btn btn-danger btn-block" href="/petitions/163">Sign this petition</a>
-      </div>
-      <div class="card-footer text-muted">
-        <span classs="supporters mr-auto">1 supporters</span>
-        <span class="goal">Goal: 2 Supporters</span>
-<div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-</div>
-      </div>
-    </div>
-  </div> --}}
 
-<div class="card text-dark">
-  <div class="card-header text-center fw-bold">
-    {{this.title}}
-  </div>
-  <div class="card-body">
-        <p class="card-text text-center text-dark">{{this.description}}</p>
-        <p class="card-text"><span class="text-muted">&mdash; {{this.dateCreated}}</span></p>
-        <a class="btn btn-danger btn-block" href="/petitions/sign?_id={{this._id}}">Sign this petition</a>
-  </div>
-  <div class="card-footer text-muted">
-        <span classs="supporters mr-auto">1 supporters</span>
-        <span class="goal">Goal: 2 Supporters</span>
-<div class="progress">
-  <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-  </div>
-</div>
+{{> petitionsCard}}
 
 {{/each}}
 

@@ -4,14 +4,13 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "dev-server": "nodemon ./bi/www"
+    "dev-server": "nodemon ./bin/www"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "dotenv": "^8.2.0",
     "email-check": "^1.1.0",
-    "email-validator": "^2.0.4",
     "express": "~4.16.1",
     "express-flash-message": "^2.0.0",
     "express-handlebars": "^5.2.0",
@@ -20,9 +19,6 @@
     "http-errors": "~1.6.3",
     "mongodb": "^3.6.3",
     "morgan": "~1.9.1",
-    "passport": "^0.4.1",
-    "passport-google-oauth": "^2.0.0",
-    "passport-google-oauth20": "^2.0.0",
     "promise": "^8.1.0"
   },
   "devDependencies": {
