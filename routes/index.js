@@ -8,7 +8,6 @@ router.get("/", async (req, res, next) => {
 	await petitionHelpers.getLimitedPetitions().then(async (petitions) => {
 		const messages = await req.consumeFlash("info");
 		let loggedIn = req.session.loggedIn;
-		console.log(petitions);
 		res.render("index", { title: "LIFE", messages, petitions });
 	});
 });
@@ -69,5 +68,12 @@ router.get("/logout", async (req, res) => {
 	await req.flash("info", "Logged out successfully");
 	res.redirect("/");
 });
+
+
+// Test method for notifications
+// router.get("/flash", async (req, res)=>{
+// 	await req.flash("info", "This is a test");
+// 	res.redirect("/");
+// });
 
 module.exports = router;

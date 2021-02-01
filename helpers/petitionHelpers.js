@@ -3,7 +3,7 @@ var db = require("../config/connection");
 var collections = require("../config/collections");
 
 module.exports = {
-	createPetition: (data) => {
+	createPetition: (data, userId) => {
 		return new Promise(async (resolve, reject) => {
 			let date_ob = new Date();
 
@@ -21,6 +21,7 @@ module.exports = {
 
 			data.dateCreated = today;
 			data.signed = 1;
+			data.signedUsers = [userId];
 
 			await db
 				.get()

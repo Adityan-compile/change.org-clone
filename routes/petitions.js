@@ -8,32 +8,39 @@ var petitionHelpers = require("../helpers/petitionHelpers");
   []Rewrite function to create a new petition.
 */
 
-// router.post("/new", async (req, res) => {
-//   let data = req.body;
-//   let email = data.email;
+router.post("/new", async (req, res) => {
+  let data = req.body;
+  let user = req.session.user;
+  let loggedIn = req.session.loggedIn;
 
-//   await userHelpers.validate(email).then(async (response) => {
-//     if (response.status) {
-//       await petitionHelpers.createPetition(data).then(async (response) => {
-//         if (response) {
-//           req.session.email = response.email;
-//           await req.flash("info", "Petition created successfully");
-//           res.redirect("/");
-//         }else{
-//         }
-//       });
-//     } else {
-//       await req.flash("info", "Invalid Email");
-//       res.redirect("/");
-//     }
-//   });
-// });
+  if (loggedIn) {
+    await userHelpers.validate(email).then(async (response) => {
+      if (response.status) {
+        await petitionHelpers.createPetition(data,user._id).then(async (response) => {
+          if (response) {
+            await req.flash("info", "Petition created successfully");
+            res.redirect("/");
+          } else {
+            await req.flash("info", "Failed to create petition");
+            res.redirect("/");
+          }
+        });
+      } else {
+        await req.flash("info", "Invalid Email");
+        res.redirect("/");
+      }
+    });
+  }else{
+    await req.flash("info", "Login First");
+    res.redirect("/");
+  }
+});
 
-router.post("/sign?:_id", async (req, res)=>{
-   if(req.session.loggedIn){
-      let _id = req.params._id;
-      await petitionHelpers.sign(_id)
-   }
+router.post("/sign?:_id", async (req, res) => {
+  if (req.session.loggedIn) {
+    let _id = req.params._id;
+    await petitionHelpers.sign(_id);
+  }
 });
 
 module.exports = router;
