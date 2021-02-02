@@ -11,12 +11,12 @@
 
 {{#if loggedIn}}
 
-{{> form}}
+{{> petitionForm}}
 
 {{else}}
 
-<a href="/signup" class=" home-text btn btn-outline-light">Sign Up</a> 
-<a href="/login" class=" home-text btn btn-outline-light">Login</a> 
+{{> signUp}} 
+{{> login}} 
 
 {{/if}}
 
