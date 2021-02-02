@@ -8,7 +8,7 @@ router.get("/", async (req, res, next) => {
 	await petitionHelpers.getLimitedPetitions().then(async (petitions) => {
 		const messages = await req.consumeFlash("info");
 		let loggedIn = req.session.loggedIn;
-		res.render("index", { title: "LIFE", messages, petitions });
+		res.render("index", { title: "LIFE", messages, petitions, loggedIn });
 	});
 });
 
@@ -35,15 +35,6 @@ router.post("/login", async (req, res) => {
 			res.redirect("/login");
 		}
 	});
-});
-
-router.get("/signup", async (req, res) => {
-	if (req.session.loggedIn) {
-		await req.flash("info", "Already loggedIn");
-		res.redirect("/");
-	} else {
-		res.render("signup");
-	}
 });
 
 router.post("/signup", async (req, res) => {

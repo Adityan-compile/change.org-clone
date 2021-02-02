@@ -25,24 +25,24 @@
 		<link
 			rel="apple-touch-icon"
 			sizes="180x180"
-			href="images/apple-touch-icon.png"
+			href="/icons/apple-touch-icon.png"
 		/>
 		<link
 			rel="icon"
 			type="image/png"
 			sizes="32x32"
-			href="images/favicon-32x32.png"
+			href="/icons/favicon-32x32.png"
 		/>
 		<link
 			rel="icon"
 			type="image/png"
 			sizes="16x16"
-			href="images/favicon-16x16.png"
+			href="/icons/favicon-16x16.png"
 		/>
 		<link
 			rel="manifest"
 			type="application/json"
-			href="manifest/site.webmanifest"
+			href="/manifest/site.webmanifest"
 		/>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -60,7 +60,7 @@
   {{/each}}
 {{/if}}
 
-
+       {{> header}}
 		{{{body}}}
 
 		<!-- MDB -->
@@ -71,6 +71,6 @@
 		  ></script>
 
 
-		<script type="application/javascript"  src="javascripts/script.js"></script>
+		<script type="application/javascript"  src="/javascripts/script.js"></script>
 	</body>
 </html>
