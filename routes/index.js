@@ -8,8 +8,7 @@ router.get("/", async (req, res, next) => {
 	await petitionHelpers.getLimitedPetitions().then(async (petitions) => {
 		const messages = await req.consumeFlash("info");
 		let loggedIn = req.session.loggedIn;
-		console.log(petitions);
-		res.render("index", { title: "LIFE", messages, petitions });
+		res.render("index", { title: "LIFE", messages, petitions, loggedIn });
 	});
 });
 
@@ -38,15 +37,6 @@ router.post("/login", async (req, res) => {
 	});
 });
 
-router.get("/signup", async (req, res) => {
-	if (req.session.loggedIn) {
-		await req.flash("info", "Already loggedIn");
-		res.redirect("/");
-	} else {
-		res.render("signup");
-	}
-});
-
 router.post("/signup", async (req, res) => {
 	let data = req.body;
 	await userHelpers.validate(data.email).then(async (response) => {
@@ -69,5 +59,12 @@ router.get("/logout", async (req, res) => {
 	await req.flash("info", "Logged out successfully");
 	res.redirect("/");
 });
+
+
+// Test method for notifications
+// router.get("/flash", async (req, res)=>{
+// 	await req.flash("info", "This is a test");
+// 	res.redirect("/");
+// });
 
 module.exports = router;

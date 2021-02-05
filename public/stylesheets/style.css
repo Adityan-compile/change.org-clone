@@ -41,6 +41,27 @@ body {
   height: 100%;
 }
 
+.input-container {
+  display: flex;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* Style the form icons */
+.icon {
+  padding: 10px;
+  color: white;
+  min-width: 50px;
+  text-align: center;
+}
+
+/* Style the input fields */
+.input-field {
+  width: 100%;
+  padding: 10px;
+  outline: none;
+}
+
 
 /* Animations */
 @keyframes slideInFromLeft{
@@ -93,3 +114,4 @@ body {
 		margin-left: 6rem;
 	}
 }
+

@@ -2,8 +2,13 @@ var mongoClient = require("mongodb").mongoClient;
 var db = require("../config/connection");
 var collections = require("../config/collections");
 
+/*
+   TODO:
+   [] Create helper function for full text search 
+*/
+
 module.exports = {
-	createPetition: (data) => {
+	createPetition: (data, userId) => {
 		return new Promise(async (resolve, reject) => {
 			let date_ob = new Date();
 
@@ -21,6 +26,7 @@ module.exports = {
 
 			data.dateCreated = today;
 			data.signed = 1;
+			data.signedUsers = [userId];
 
 			await db
 				.get()
@@ -64,6 +70,19 @@ module.exports = {
 				.get()
 				.collection(collections.PETITION_COLLECTION)
 				.find()
+				.sort({ _id: -1})
+				.limit(5)
+				.toArray();
+			resolve(petitions);
+		});
+	},
+		getAllPetitions: () => {
+		return new Promise(async (resolve, reject) => {
+			var petitions = await db
+				.get()
+				.collection(collections.PETITION_COLLECTION)
+				.find()
+				.sort({ _id: -1})
 				.toArray();
 			resolve(petitions);
 		});

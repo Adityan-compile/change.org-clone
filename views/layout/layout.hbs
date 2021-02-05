@@ -25,47 +25,52 @@
 		<link
 			rel="apple-touch-icon"
 			sizes="180x180"
-			href="images/apple-touch-icon.png"
+			href="/icons/apple-touch-icon.png"
 		/>
 		<link
 			rel="icon"
 			type="image/png"
 			sizes="32x32"
-			href="images/favicon-32x32.png"
+			href="/icons/favicon-32x32.png"
 		/>
 		<link
 			rel="icon"
 			type="image/png"
 			sizes="16x16"
-			href="images/favicon-16x16.png"
+			href="/icons/favicon-16x16.png"
 		/>
 		<link
 			rel="manifest"
 			type="application/json"
-			href="manifest/site.webmanifest"
+			href="/manifest/site.webmanifest"
 		/>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+		  <script src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js" integrity="sha512-efUTj3HdSPwWJ9gjfGR71X9cvsrthIA78/Fvd/IN+fttQVy7XWkOAXb295j8B3cmm/kFKVxjiNYzKw9IQJHIuQ==" crossorigin="anonymous"></script>
+
 	</head>
 	<body>
-		{{#each messages}}
-		<div
-			class="alert alert-warning alert-dismissible fade show"
-			role="alert"
-		>
-			{{this}}
-			<button
-				type="button"
-				class="close"
-				data-dismiss="alert"
-				aria-label="Close"
-			></button>
-		</div>
-		{{/each}} {{{body}}}
+
+{{#if messages}}
+  {{#each messages}}
+    <script>
+       $.notify("{{this}}", "dark");
+    </script>
+  {{/each}}
+{{/if}}
+
+       {{> header}}
+		{{{body}}}
 
 		<!-- MDB -->
+
 		<script
-			type="text/javascript"
-			src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.1.0/mdb.min.js"
-		></script>
-		<script type="application/javascript"  src="javascripts/script.js"></script>
+		  	type="text/javascript"
+		  	src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/3.1.0/mdb.min.js"
+		  ></script>
+
+
+		<script type="application/javascript"  src="/javascripts/script.js"></script>
 	</body>
 </html>
