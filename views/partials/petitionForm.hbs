@@ -30,10 +30,6 @@
       </div>
       <div class="modal-body text-dark">
         <form class="modal-form" id="petitionForm" method="POST" action="/petitions/new">
-            <div class="form-outline mb-4">
-    <input type="email" id="email" name="email" class="form-control" required="true" />
-    <label class="form-label" for="email">Email address</label>
-  </div>
     <div class="form-outline mb-4">
     <input type="text" id="title" name="title" class="form-control" required="true" />
     <label class="form-label" for="title">Title</label>
@@ -61,7 +57,15 @@
 
 
 <script type="text/javascript"> 
-  document.getElementById("submitForm").addEventListener("click",()=>{
-    document.getElementById('petitionForm').submit();
+ let petitionForm = document.getElementById("petitionForm");
+ let submitBtn = document.getElementById("submitForm");
+         submitBtn.addEventListener("click",()=>{
+       petitionForm.submit();
   });
+   petitionForm.addEventListener("keypress", (e) => {
+    if(e.key === 'Enter'){
+      petitionForm.submit();
+    }
+   });
+
 </script>

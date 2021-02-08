@@ -29,7 +29,7 @@
       <div class="modal-body text-dark">
         <form
           class="modal-form"
-          id="petitionForm"
+          id="loginForm"
           method="POST"
           action="/login"
         >
@@ -84,7 +84,7 @@
           Cancel
         </button>
         <button type="button" id="submitForm" class="btn btn-success">
-          Sign Up
+          Login
         </button>
       </div>
     </div>
@@ -92,7 +92,14 @@
 </div>
 
 <script type="text/javascript">
+  let loginForm = document.getElementById("loginForm");
   document.getElementById("submitForm").addEventListener("click", () => {
-    document.getElementById("petitionForm").submit();
+      loginForm.submit();
   });
+
+  loginForm.addEventListener("keypress", (e)=>{
+    if (e.key === 'Enter') {
+      loginForm.submit();
+    }
+  })
 </script>

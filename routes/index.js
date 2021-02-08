@@ -40,7 +40,7 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
 	let data = req.body;
 	await userHelpers.validate(data.email).then(async (response) => {
-		await userHelpers.signup(data).then(async (status) => {
+		await userHelpers.signUp(data).then(async (status) => {
 			if (status) {
 				req.session.loggedIn = true;
 				req.session.user = response;

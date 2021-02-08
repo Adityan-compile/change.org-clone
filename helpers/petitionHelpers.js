@@ -29,16 +29,25 @@ module.exports = {
 			data.signedUsers = [userId];
 
 			await db
-				.get()
+			    .get()
 				.collection(collections.PETITION_COLLECTION)
-				.insertOne(data)
-				.then((response) => {
-					resolve(response.ops[0]);
+				.createIndex({
+					title: "text",
+					description: "text",
+				})
+				.then(async () => {
+					await db
+						.get()
+						.collection(collections.PETITION_COLLECTION)
+						.insertOne(data)
+						.then((response) => {
+							resolve(response.ops[0]);
+						});
 				});
 		});
 	},
 
-/* 
+	/* 
   TODO:
   [] Allow one user to sign a petition only once.
   [] Maintain a seperate collection for signed petitions.
@@ -58,7 +67,8 @@ module.exports = {
 							signed: 1,
 						},
 					}
-				).then((response)=>{
+				)
+				.then((response) => {
 					console.log(response);
 				});
 		});
@@ -70,21 +80,34 @@ module.exports = {
 				.get()
 				.collection(collections.PETITION_COLLECTION)
 				.find()
-				.sort({ _id: -1})
+				.sort({ _id: -1 })
 				.limit(5)
 				.toArray();
 			resolve(petitions);
 		});
 	},
-		getAllPetitions: () => {
+	getAllPetitions: () => {
 		return new Promise(async (resolve, reject) => {
 			var petitions = await db
 				.get()
 				.collection(collections.PETITION_COLLECTION)
 				.find()
-				.sort({ _id: -1})
+				.sort({ _id: -1 })
 				.toArray();
 			resolve(petitions);
+		});
+	},
+
+	search: (query) => {
+		return new Promise(async (resolve, reject) => {
+			var results = await db
+				.get()
+				.collection(collections.PETITION_COLLECTION)
+				.find({ $text: { $search: query, $caseSensitive: false } })
+				.sort({ _id: -1 })
+				.toArray();
+
+			resolve(results);
 		});
 	},
 };

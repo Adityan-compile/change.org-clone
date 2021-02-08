@@ -14,8 +14,6 @@ router.post("/new", async (req, res) => {
   let loggedIn = req.session.loggedIn;
 
   if (loggedIn) {
-    await userHelpers.validate(email).then(async (response) => {
-      if (response.status) {
         await petitionHelpers
           .createPetition(data, user._id)
           .then(async (response) => {
@@ -27,13 +25,8 @@ router.post("/new", async (req, res) => {
               res.redirect("/");
             }
           });
-      } else {
-        await req.flash("info", "Invalid Email");
-        res.redirect("/");
-      }
-    });
   } else {
-    await req.flash("info", "Login First");
+    await req.flash("info", "Please Login First");
     res.redirect("/");
   }
 });
@@ -59,8 +52,13 @@ router.get("/search", async (req, res)=>{
    res.render("search", {title: "LIFE", messages, loggedIn});
 });
 
-router.get("/search?:q", async (req, res)=>{
-  // Finish work on full text search
+
+router.get("/results?:search_query", async (req, res)=>{
+  let searchQuery = req.query.search_query;
+  await petitionHelpers.search(searchQuery).then((results)=>{
+     let loggedIn = req.session.loggedIn;
+     res.render("search", { title: "LIFE", results, loggedIn})
+  });
 });
 
 module.exports = router;

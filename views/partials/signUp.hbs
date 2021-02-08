@@ -29,7 +29,7 @@
       <div class="modal-body text-dark">
         <form
           class="modal-form"
-          id="petitionForm"
+          id="signUpForm"
           method="POST"
           action="/signup"
         >
@@ -102,7 +102,15 @@
 </div>
 
 <script type="text/javascript">
+let signUpForm = document.getElementById("signUpForm");
   document.getElementById("submitForm").addEventListener("click", () => {
-    document.getElementById("petitionForm").submit();
+    signUpForm.submit();
   });
+
+ 
+ signUpForm.addEventListener("keypress", (e)=>{
+   if (e.key === 'Enter') {
+      signUpForm.submit();
+   }
+ });
 </script>
