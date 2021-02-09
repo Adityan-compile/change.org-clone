@@ -42,7 +42,7 @@ router.get("/browse", async (req, res) => {
   await petitionHelpers.getAllPetitions().then(async (petitions) => {
     const messages = await req.consumeFlash("info");
     let loggedIn = req.session.loggedIn;
-    res.render("browse", { title: "LIFE", messages, petitions, loggedIn });
+    res.render("browse", { title: "LIFE", messages, petitions, loggedIn, browse:true });
   });
 });
 

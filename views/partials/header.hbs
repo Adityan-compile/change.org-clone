@@ -42,6 +42,32 @@
             <a class="nav-link active text-white" href="/donate">Donate</a>
           </li>
         </ul>
+
+       {{#if loggedIn}}
+       <ul class="navbar-nav ml-auto mb-2 mb-lg-0" style="padding-right: 1.7rem;">
+                <li class="nav-item dropdown">
+          <a
+            class="nav-link text-white dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-mdb-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Account
+          </a>
+          <!-- Dropdown menu -->
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li><a class="dropdown-item" href="#">Profile</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="/logout">logout</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+       </ul>
+       {{/if}}
         <!-- Left links -->
       </div>
       <!-- Collapsible wrapper -->

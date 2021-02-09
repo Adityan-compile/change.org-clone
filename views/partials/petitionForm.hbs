@@ -1,3 +1,15 @@
+{{#if browse}}
+<button
+  type="button"
+  class="btn btn-primary"
+  data-mdb-toggle="modal"
+  data-mdb-target="#petitionModal"
+>
+  
+  Start a Petition
+
+</button>
+{{else}}
 <button
   type="button"
   class="btn btn-outline-light home-text"
@@ -8,6 +20,7 @@
   Start a Petition
 
 </button>
+{{/if}}
 
 <!-- Modal -->
 <div

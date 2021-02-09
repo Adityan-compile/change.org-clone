@@ -48,7 +48,7 @@ module.exports = {
 				.collection(collections.USER_COLLECTION)
 				.findOne({ email: data.email });
 			if (user) {
-				bcrypt.compare(data.password, user.password).then((status) => {
+				await bcrypt.compare(data.password, user.password).then((status) => {
 					if (status) {
 						response.user = user;
 						response.status = true;
