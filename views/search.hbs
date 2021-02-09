@@ -9,8 +9,8 @@
 </div>
 </div>
 
-{{#if petitions}}
-   {{#each petitions}}
+{{#if results}}
+   {{#each results}}
       {{> petitionsCard}}
    {{/each}}
 {{/if}}
@@ -20,7 +20,7 @@
 <script>
    	  let query = document.getElementById("search");
       let submitBtn = document.getElementById("searchBtn");
-      let baseUrl = "/petitions/search?q=";
+      let baseUrl = "/petitions/results?search_query=";
       
       function submit(){
       query = query.value;      	

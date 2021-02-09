@@ -29,7 +29,7 @@
       <div class="modal-body text-dark">
         <form
           class="modal-form"
-          id="petitionForm"
+          id="loginForm"
           method="POST"
           action="/login"
         >
@@ -48,7 +48,7 @@
             function showPassword() {
               let passwordField = document.getElementById("password");
               let icon = document.getElementById("icon").classList;
-
+               alert("onclick event fired");
               if (passwordField.type === "password") {
                 passwordField.type = "text";
                 icon.remove("fa-eye");
@@ -83,16 +83,25 @@
         <button type="button" class="btn btn-danger" data-mdb-dismiss="modal">
           Cancel
         </button>
-        <button type="button" id="submitForm" class="btn btn-success">
-          Sign Up
-        </button>
+        <button type="button" id="submitBtn" class="btn btn-success">
+          Login
+  </button>
       </div>
     </div>
   </div>
 </div>
 
 <script type="text/javascript">
-  document.getElementById("submitForm").addEventListener("click", () => {
-    document.getElementById("petitionForm").submit();
+  let loginForm = document.getElementById("loginForm");
+  document.getElementById("submitBtn").addEventListener("click", () => {
+      loginForm.submit();
+      alert("click event fired");
+  });
+
+  loginForm.addEventListener("keypress", (e)=>{
+    if (e.key === 'Enter') {
+      loginForm.submit();
+      alert("keypress event fired");
+    }
   });
 </script>

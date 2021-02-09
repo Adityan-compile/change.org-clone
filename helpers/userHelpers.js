@@ -1,9 +1,9 @@
 var emailCheck = require("email-check");
+var bcrypt = require("bcrypt");
 var db = require("../config/connection");
 var collections = require("../config/collections");
 
 module.exports = {
-
 	validate: (email) => {
 		return new Promise(async (resolve, reject) => {
 			let response = {};
@@ -23,12 +23,18 @@ module.exports = {
 	signUp: (userData) => {
 		return new Promise(async (resolve, reject) => {
 			userData.password = await bcrypt.hash(userData.password, 10);
-
-			db.get()
-				.collection(collections.USER_COLLECTION)
-				.insertOne(userData)
-				.then((data) => {
-					resolve(data.ops[0]);
+			await db
+			    .get()
+			    .collection(collections.USER_COLLECTION)
+				.createIndex({ email: "text" }, { unique: true })
+				.then(async () => {
+					await db
+						.get()
+						.collection(collections.USER_COLLECTION)
+						.insertOne(userData)
+						.then((data) => {
+							resolve(data.ops[0]);
+						});
 				});
 		});
 	},
@@ -42,7 +48,7 @@ module.exports = {
 				.collection(collections.USER_COLLECTION)
 				.findOne({ email: data.email });
 			if (user) {
-				bcrypt.compare(data.password, user.password).then((status) => {
+				await bcrypt.compare(data.password, user.password).then((status) => {
 					if (status) {
 						response.user = user;
 						response.status = true;

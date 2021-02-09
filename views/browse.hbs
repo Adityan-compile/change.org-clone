@@ -5,6 +5,13 @@
    {{#each petitions}}
       {{> petitionsCard}}
    {{/each}}
+{{else}}
+   {{#if loggedIn}}
+   <p class="text-center text-muted">No Petitions Here!! Comeback later or create a new petition:</p>
+   {{> petitionsForm}}
+   {{else}}
+   <p class="text-center text-muted">No Petitions Here!! Comeback later</p>
+   {{/if}}
 {{/if}}
 
 </section>

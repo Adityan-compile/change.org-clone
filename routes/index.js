@@ -12,27 +12,17 @@ router.get("/", async (req, res, next) => {
 	});
 });
 
-router.get("/login", async (req, res) => {
-	let loggedIn = req.session.loggedIn;
-	if (loggedIn) {
-		await req.flash("info", "Already logged in");
-		res.redirect("/");
-	} else {
-		res.render("login");
-	}
-});
-
 router.post("/login", async (req, res) => {
 	let data = req.body;
-	await userHelpers.login(data).then(async (status) => {
-		if (status) {
+	await userHelpers.login(data).then(async (response) => {
+		if (response.status) {
 			req.session.loggedIn = true;
 			req.session.user = data;
 			res.redirect("/");
 		} else {
 			req.session.loggedIn = false;
 			await req.flash("info", "Login Failed");
-			res.redirect("/login");
+			res.redirect("/");
 		}
 	});
 });
@@ -40,7 +30,7 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
 	let data = req.body;
 	await userHelpers.validate(data.email).then(async (response) => {
-		await userHelpers.signup(data).then(async (status) => {
+		await userHelpers.signUp(data).then(async (status) => {
 			if (status) {
 				req.session.loggedIn = true;
 				req.session.user = response;
@@ -55,8 +45,8 @@ router.post("/signup", async (req, res) => {
 });
 
 router.get("/logout", async (req, res) => {
-	req.session.pop();
-	await req.flash("info", "Logged out successfully");
+	req.session.destroy();
+	// await req.flash("info", "Logged out successfully");
 	res.redirect("/");
 });
 

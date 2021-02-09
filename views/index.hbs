@@ -26,12 +26,23 @@
 <section class="petitions p-4">
   <h4 class="text-center p-4 mb-2">PETITIONS</h4>
 
+
+{{#if petitions}}
+
 {{#each petitions}}
 
 {{> petitionsCard}}
 
 {{/each}}
 
+{{else}}
+{{#if loggedIn}}
+<p class="text-center text-muted">Whoops!! Looks like there are no Petitions here. Comeback later or create a new petition</p>
+{{> petitionForm}}
+{{else}}
+<p class="text-center text-muted">Whoops!! Looks like there are no Petitions here</p>
+{{/if}}
+{{/if}}
 </section>
 
 
