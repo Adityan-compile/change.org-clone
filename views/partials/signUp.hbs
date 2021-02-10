@@ -56,8 +56,8 @@
 
           <script>
             function showPassword() {
-              let passwordField = document.getElementById("password");
-              let icon = document.getElementById("icon").classList;
+              let passwordField = document.getElementById("signupPassword");
+              let icon = document.getElementById("signupIcon").classList;
 
               if (passwordField.type === "password") {
                 passwordField.type = "text";
@@ -75,13 +75,13 @@
             <input
               class="input-field form-control"
               type="password"
-              id="password"
+              id="signupPassword"
               name="password"
               minlength="8"
             />
             <i
               class="fa fa-eye icon text-dark"
-              id="icon"
+              id="signupIcon"
               role="button"
               onclick="showPassword()"
             ></i>

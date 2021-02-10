@@ -1,0 +1,48 @@
+<h4 class="text-center fw-bold p-4">DONATE</h4>
+
+<section class="donate p-5">
+<form>
+  <!-- 2 column grid layout with text inputs for the first and last names -->
+  <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" id="form3Example1" class="form-control" />
+        <label class="form-label" for="form3Example1">First name</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" id="form3Example2" class="form-control" />
+        <label class="form-label" for="form3Example2">Last name</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email input -->
+  <div class="form-outline mb-4">
+    <input type="email" id="form3Example3" class="form-control" />
+    <label class="form-label" for="form3Example3">Email address</label>
+  </div>
+
+  <!-- Password input -->
+  <div class="form-outline mb-4">
+     <label for="amount" class="form-label">Donation Amount</label>
+<div class="range">
+  <input type="range" class="form-range" min="1" max="1000" id="amount" />
+</div>
+  </div>
+
+  <!-- Checkbox -->
+  <button type="submit" id="donateBtn" class="btn btn-primary btn-block mb-4">Donate</button>
+</form>
+</section>
+
+ <script>
+    let donateBtn = document.querySelector("#donateBtn");
+    let amount = document.querySelector("#amount");
+
+    amount.addEventListener("change", ()=>{
+    	donateBtn.innerHTML = "Donate &#8377;"+amount.value; 
+    });
+
+</script>
