@@ -44,6 +44,11 @@ router.post("/signup", async (req, res) => {
 	});
 });
 
+router.get("/donate", (req, res)=>{
+	let loggedIn = req.session.loggedIn;
+	res.render("donate", { title: "LIFE", loggedIn});
+});
+
 router.get("/logout", async (req, res) => {
 	req.session.destroy();
 	// await req.flash("info", "Logged out successfully");

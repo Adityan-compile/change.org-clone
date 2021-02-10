@@ -44,11 +44,11 @@
             <label class="form-label" for="email">Email address</label>
           </div>
 
-          <script>
+                    <script>
             function showPassword() {
-              let passwordField = document.getElementById("password");
-              let icon = document.getElementById("icon").classList;
-               alert("onclick event fired");
+              let passwordField = document.getElementById("loginPassword");
+              let icon = document.getElementById("loginIcon").classList;
+
               if (passwordField.type === "password") {
                 passwordField.type = "text";
                 icon.remove("fa-eye");
@@ -65,17 +65,17 @@
             <input
               class="input-field form-control"
               type="password"
-              id="password"
+              id="loginPassword"
               name="password"
               minlength="8"
             />
             <i
               class="fa fa-eye icon text-dark"
-              id="icon"
+              id="loginIcon"
               role="button"
               onclick="showPassword()"
             ></i>
-            <label class="form-label" for="email">Password</label>
+            <label class="form-label" for="password">Password</label>
           </div>
         </form>
       </div>
@@ -93,15 +93,15 @@
 
 <script type="text/javascript">
   let loginForm = document.getElementById("loginForm");
+
   document.getElementById("submitBtn").addEventListener("click", () => {
       loginForm.submit();
-      alert("click event fired");
   });
 
   loginForm.addEventListener("keypress", (e)=>{
     if (e.key === 'Enter') {
       loginForm.submit();
-      alert("keypress event fired");
     }
   });
+
 </script>
