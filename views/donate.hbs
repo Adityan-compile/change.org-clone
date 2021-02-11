@@ -2,38 +2,61 @@
 
 <section class="donate p-5">
 <form>
-  <!-- 2 column grid layout with text inputs for the first and last names -->
+
   <div class="row mb-4">
     <div class="col">
       <div class="form-outline">
-        <input type="text" id="form3Example1" class="form-control" />
-        <label class="form-label" for="form3Example1">First name</label>
+        <input type="text" id="fullName" class="form-control" />
+        <label class="form-label" for="fullName">Full Name</label>
       </div>
     </div>
     <div class="col">
       <div class="form-outline">
-        <input type="text" id="form3Example2" class="form-control" />
-        <label class="form-label" for="form3Example2">Last name</label>
+        <input type="email" id="email" class="form-control" />
+        <label class="form-label" for="email">Email address</label>
       </div>
     </div>
   </div>
 
-  <!-- Email input -->
-  <div class="form-outline mb-4">
-    <input type="email" id="form3Example3" class="form-control" />
-    <label class="form-label" for="form3Example3">Email address</label>
+    <div class="row mb-4">
+    <div class="col">
+      <div class="form-outline">
+        <input type="text" id="cardNumber" class="form-control"/>
+        <label class="form-label" for="cardNumber">Card Number</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-outline">
+        <input type="number" id="cvv" class="form-control"/>
+        <label class="form-label" for="cvv">CVV</label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="input-group form-outline">
+        <input type="text" id="expiry" class="form-control" name="expiry" />
+        <label class="form-label" for="expiry">YYYY-MM</label>
+      </div>
+    </div>
   </div>
 
-  <!-- Password input -->
+<script>
+$(document).ready(()=>{
+	$("#expiry")
+	.datepicker({
+		format:'mm/yyyy'
+	});
+});
+</script>
+
   <div class="form-outline mb-4">
      <label for="amount" class="form-label">Donation Amount</label>
 <div class="range">
-  <input type="range" class="form-range" min="1" max="1000" id="amount" />
+  <input type="range" class="form-range" min="10" max="9999" id="amount" value="10"/>
 </div>
   </div>
 
   <!-- Checkbox -->
-  <button type="submit" id="donateBtn" class="btn btn-primary btn-block mb-4">Donate</button>
+  <button type="submit" id="donateBtn" class="btn btn-primary btn-block mb-4">Donate &#8377;10</button>
 </form>
 </section>
 
@@ -42,7 +65,7 @@
     let amount = document.querySelector("#amount");
 
     amount.addEventListener("change", ()=>{
-    	donateBtn.innerHTML = "Donate &#8377;"+amount.value; 
+    	donateBtn.innerHTML = "Donate &#8377;"+amount.value;
     });
 
 </script>
