@@ -55,10 +55,10 @@
           </div>
 
           <script>
-            function showPassword() {
+                      function showSignUpPassword() {
               let passwordField = document.getElementById("signupPassword");
-              let icon = document.getElementById("signupIcon").classList;
-
+              let icon = document.getElementById("signupBtn").classList;
+            
               if (passwordField.type === "password") {
                 passwordField.type = "text";
                 icon.remove("fa-eye");
@@ -81,11 +81,11 @@
             />
             <i
               class="fa fa-eye icon text-dark"
-              id="signupIcon"
+              id="signupBtn"
               role="button"
-              onclick="showPassword()"
+              onclick="showSignUpPassword()"
             ></i>
-            <label class="form-label" for="email">Password</label>
+            <label class="form-label" for="signUpPassword">Password</label>
           </div>
         </form>
       </div>
@@ -102,6 +102,7 @@
 </div>
 
 <script type="text/javascript">
+
 let signUpForm = document.getElementById("signUpForm");
   document.getElementById("submitForm").addEventListener("click", () => {
     signUpForm.submit();

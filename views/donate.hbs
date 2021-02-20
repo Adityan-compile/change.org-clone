@@ -1,71 +1,105 @@
 <h4 class="text-center fw-bold p-4">DONATE</h4>
 
 <section class="donate p-5">
-<form>
+	<form>
+		<div class="row mb-4">
+			<div class="col">
+				<div class="form-outline">
+					<input type="text" id="fullName" class="form-control" />
+					<label class="form-label" for="fullName">Full Name</label>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-outline">
+					<input type="email" id="email" class="form-control" />
+					<label class="form-label" for="email">Email address</label>
+				</div>
+			</div>
+		</div>
 
-  <div class="row mb-4">
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" id="fullName" class="form-control" />
-        <label class="form-label" for="fullName">Full Name</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input type="email" id="email" class="form-control" />
-        <label class="form-label" for="email">Email address</label>
-      </div>
-    </div>
-  </div>
+		<div class="row mb-4">
+			<div class="col">
+				<div class="form-outline">
+					<input type="text" id="cardNumber" class="form-control" />
+					<label class="form-label" for="cardNumber"
+						>Card Number</label
+					>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-outline">
+					<input type="number" id="cvv" class="form-control" />
+					<label class="form-label" for="cvv">CVV</label>
+				</div>
+			</div>
+			<div class="col">
+				{{!--
+				<div class="input-group form-outline">
+					<input
+						type="text"
+						id="expiry"
+						class="form-control"
+						name="expiry"
+					/>
+					<label class="form-label" for="expiry">YYYY-MM</label>
+				</div>
+				--}}
 
-    <div class="row mb-4">
-    <div class="col">
-      <div class="form-outline">
-        <input type="text" id="cardNumber" class="form-control"/>
-        <label class="form-label" for="cardNumber">Card Number</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-outline">
-        <input type="number" id="cvv" class="form-control"/>
-        <label class="form-label" for="cvv">CVV</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="input-group form-outline">
-        <input type="text" id="expiry" class="form-control" name="expiry" />
-        <label class="form-label" for="expiry">YYYY-MM</label>
-      </div>
-    </div>
-  </div>
+				<div class="input-container form-outline">
+					<input
+						class="input-field form-control"
+						type="text"
+						id="expiry"
+						name="cardExpiry"
+						minlength="8"
+					/>
+					<i
+						class="fa fa-calendar icon text-dark"
+						id="expiryBtn"
+						role="button"
+						onclick="showCalendarControl('expiry');"
+					></i>
+					<label class="form-label" for="expiry">MM-YYYY</label>
+				</div>
+			</div>
+		</div>
 
-<script>
-$(document).ready(()=>{
-	$("#expiry")
-	.datepicker({
-		format:'mm/yyyy'
-	});
-});
-</script>
+{{!--		<script>
+		 	document
+		 		.querySelector("#expiryBtn")
+		 		.addEventListener("click", showCalendarControl('expiry'));
+		 </script>   --}}
 
-  <div class="form-outline mb-4">
-     <label for="amount" class="form-label">Donation Amount</label>
-<div class="range">
-  <input type="range" class="form-range" min="10" max="9999" id="amount" value="10"/>
-</div>
-  </div>
+		<div class="form-outline mb-4">
+			<label for="amount" class="form-label">Donation Amount</label>
+			<div class="range">
+				<input
+					type="range"
+					class="form-range"
+					min="10"
+					max="9000"
+					id="amount"
+					value="10"
+				/>
+			</div>
+		</div>
 
-  <!-- Checkbox -->
-  <button type="submit" id="donateBtn" class="btn btn-primary btn-block mb-4">Donate &#8377;10</button>
-</form>
+		<!-- Checkbox -->
+		<button
+			type="submit"
+			id="donateBtn"
+			class="btn btn-primary btn-block mb-4"
+		>
+			Donate &#8377;10
+		</button>
+	</form>
 </section>
 
- <script>
-    let donateBtn = document.querySelector("#donateBtn");
-    let amount = document.querySelector("#amount");
+<script>
+	let donateBtn = document.querySelector("#donateBtn");
+	let amount = document.querySelector("#amount");
 
-    amount.addEventListener("change", ()=>{
-    	donateBtn.innerHTML = "Donate &#8377;"+amount.value;
-    });
-
+	amount.addEventListener("change", () => {
+		donateBtn.innerHTML = "Donate &#8377;" + amount.value;
+	});
 </script>
