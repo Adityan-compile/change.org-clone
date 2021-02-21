@@ -17,7 +17,7 @@ router.post("/login", async (req, res) => {
 	await userHelpers.login(data).then(async (response) => {
 		if (response.status) {
 			req.session.loggedIn = true;
-			req.session.user = data;
+			req.session.user = response.user;
 			res.redirect("/");
 		} else {
 			req.session.loggedIn = false;
@@ -30,10 +30,10 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
 	let data = req.body;
 	await userHelpers.validate(data.email).then(async (response) => {
-		await userHelpers.signUp(data).then(async (status) => {
-			if (status) {
+		await userHelpers.signUp(data).then(async (result) => {
+			if (result.status) {
 				req.session.loggedIn = true;
-				req.session.user = response;
+				req.session.user = result.user;
 				await req.flash("info", "SignUp Successful");
 				res.redirect("/");
 			} else {

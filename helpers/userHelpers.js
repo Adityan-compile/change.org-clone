@@ -23,20 +23,15 @@ module.exports = {
 	signUp: (userData) => {
 		return new Promise(async (resolve, reject) => {
 			userData.password = await bcrypt.hash(userData.password, 10);
-			await db
-			    .get()
-			    .collection(collections.USER_COLLECTION)
-				.createIndex({ email: "text" }, { unique: true })
-				.then(async () => {
 					await db
 						.get()
 						.collection(collections.USER_COLLECTION)
 						.insertOne(userData)
 						.then((data) => {
+							data.ops[0].status = true;
 							resolve(data.ops[0]);
 						});
 				});
-		});
 	},
 
 	login: (data) => {

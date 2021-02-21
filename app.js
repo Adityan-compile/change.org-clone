@@ -5,6 +5,7 @@ var cookieParser = require("cookie-parser");
 var session = require("express-session");
 var logger = require("morgan");
 var hbs = require("express-handlebars");
+var handleBars = require("handlebars");
 const { flash } = require('express-flash-message');
 var Promise = require("promise");
 
@@ -39,6 +40,11 @@ app.engine(
 	})
 );
 
+// Configure helper to calculate percentage in template
+handleBars.registerHelper("percentage", (signed, goal)=> {
+  return signed/goal*100;
+});
+
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -57,24 +63,6 @@ app.use(
 
 // apply express-flash-message middleware
 app.use(flash({ sessionKeyName: 'flashMessage' }));
-
-// // Setup passport google 0auth.
-// passport.use(
-// 	new googleStrategy(
-// 		{
-// 			clientID: process.env.GOOGLE_API_KEY,
-// 			clientSecret: process.env.GOOGLE_KEY_SECRET,
-// 			callbackURL: "/",
-// 		},
-// 		(accessToken, refreshToken, profile, done) => {
-// 			let user = {
-// 				"_id":objectId(profile.id),
-// 				"username" : profile.displayName
-// 			};
-// 			userHelpers.insertUser(user);
-// 		}
-// 	)
-// );
 
 app.use(express.static(path.join(__dirname, "public")));
 

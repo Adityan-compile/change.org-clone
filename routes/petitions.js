@@ -13,6 +13,8 @@ router.post("/new", async (req, res) => {
   let user = req.session.user;
   let loggedIn = req.session.loggedIn;
 
+  console.log(req.session);
+
   if (loggedIn) {
         await petitionHelpers
           .createPetition(data, user._id)
