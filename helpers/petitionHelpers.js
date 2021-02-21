@@ -2,11 +2,6 @@ var mongoClient = require("mongodb").mongoClient;
 var db = require("../config/connection");
 var collections = require("../config/collections");
 
-/*
-   TODO:
-   [] Create helper function for full text search 
-*/
-
 module.exports = {
 	createPetition: (data, userId) => {
 		return new Promise(async (resolve, reject) => {
@@ -28,14 +23,6 @@ module.exports = {
 			data.signed = 1;
 			data.signedUsers = [userId];
 
-			await db
-			    .get()
-				.collection(collections.PETITION_COLLECTION)
-				.createIndex({
-					title: "text",
-					description: "text",
-				})
-				.then(async () => {
 					await db
 						.get()
 						.collection(collections.PETITION_COLLECTION)
@@ -43,7 +30,6 @@ module.exports = {
 						.then((response) => {
 							resolve(response.ops[0]);
 						});
-				});
 		});
 	},
 
@@ -103,11 +89,15 @@ module.exports = {
 			var results = await db
 				.get()
 				.collection(collections.PETITION_COLLECTION)
-				.find({ $text: { $search: query, $caseSensitive: false } })
+				.find({ title: {
+					$regex: new RegExp(query),
+					$options: '-i'
+				}})
 				.sort({ _id: -1 })
 				.toArray();
 
 			resolve(results);
 		});
 	},
+
 };
