@@ -2,6 +2,8 @@ var express = require("express");
 var userHelpers = require("../helpers/userHelpers");
 var petitionHelpers = require("../helpers/petitionHelpers");
 var router = express.Router();
+var stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
+var querystring = require("querystring");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
@@ -44,9 +46,26 @@ router.post("/signup", async (req, res) => {
 	});
 });
 
-router.get("/donate", (req, res)=>{
-	let loggedIn = req.session.loggedIn;
-	res.render("donate", { title: "LIFE", loggedIn});
+router
+	.route("/donate")
+	.get((req, res) => {
+		let loggedIn = req.session.loggedIn;
+		let user = req.session.user;
+		let public_key = process.env.STRIPE_PUBLIC_KEY;
+		res.render("donate", { title: "LIFE", loggedIn, user, public_key });
+	})
+	.post((req, res) => {
+		let data = req.body;
+		let encodedEmail = encodeURIComponent(`${data.email}`);
+		data.url = `/donate/confirm?name=${data.name}&email=${encodedEmail}&amount=${data.amount}`;
+		res.redirect(data.url);
+	});
+
+router.get("/donate/confirm", (req, res) => {
+	let data = req.query;
+	data.email = decodeURIComponent(data.email);
+	let public_key = process.env.STRIPE_PUBLIC_KEY;
+	res.render("confirmDonation", { title:"LIFE", data, public_key});
 });
 
 router.get("/logout", async (req, res) => {
@@ -54,7 +73,6 @@ router.get("/logout", async (req, res) => {
 	// await req.flash("info", "Logged out successfully");
 	res.redirect("/");
 });
-
 
 // Test method for notifications
 // router.get("/flash", async (req, res)=>{

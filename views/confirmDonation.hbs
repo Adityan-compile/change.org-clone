@@ -1,0 +1,26 @@
+	<h2 class="text-center fw-bold p-4">CONFIRM DONATION</h2>
+	<h4 class="text-center text-dark fw-bold p-4">Confirm Your Donation of ${{data.amount}}</h4>
+    <p class="text-center text-dark fw-bold p-4">
+    	By donating you are being a part of a generous group of people who helps
+    	 us maintain this project and helping change lives.
+    </p>
+
+<section class="donate text-center">
+	    <form action="/charge" method="POST"> 
+       <script 
+          src="//checkout.stripe.com/v2/checkout.js"
+          class="stripe-button"
+          data-key="{{public_key}}" 
+          data-amount="{{data.amount}}" 
+          data-currency="usd" 
+          data-name="{{data.name}}" 
+          data-image="/icons/android-chrome-512x512.png"
+          data-description="Donation" 
+          data-locale="auto" > 
+        </script> 
+         <script>
+           document.getElementsByClassName("stripe-button-el")[0].style.display = 'none';
+         </script> 
+    <button class="btn btn-outline-dark" type="submit">Donate ${{data.amount}}</button>
+    </form>
+</section>
