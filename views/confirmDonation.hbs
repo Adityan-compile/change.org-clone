@@ -6,14 +6,15 @@
     </p>
 
 <section class="donate text-center">
-	    <form action="/charge" method="POST"> 
+	    <form action="/charge?name={{data.name}}&amount={{data.amount}}" method="POST"> 
        <script 
           src="//checkout.stripe.com/v2/checkout.js"
           class="stripe-button"
           data-key="{{public_key}}" 
-          data-amount="{{data.amount}}" 
-          data-currency="usd" 
+          data-amount="{{calcAmount data.amount}}" 
+          data-currency="USD" 
           data-name="{{data.name}}" 
+          data-email="{{data.email}}"
           data-image="/icons/android-chrome-512x512.png"
           data-description="Donation" 
           data-locale="auto" > 

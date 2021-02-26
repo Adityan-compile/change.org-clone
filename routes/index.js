@@ -3,7 +3,6 @@ var userHelpers = require("../helpers/userHelpers");
 var petitionHelpers = require("../helpers/petitionHelpers");
 var router = express.Router();
 var stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
-var querystring = require("querystring");
 
 /* GET home page. */
 router.get("/", async (req, res, next) => {
@@ -65,7 +64,38 @@ router.get("/donate/confirm", (req, res) => {
 	let data = req.query;
 	data.email = decodeURIComponent(data.email);
 	let public_key = process.env.STRIPE_PUBLIC_KEY;
-	res.render("confirmDonation", { title:"LIFE", data, public_key});
+	res.render("confirmDonation", { title: "LIFE", data, public_key });
+});
+
+/* TODO
+   [] Create Success route
+   [] Add donation to database
+   [] Send email after donation success
+ */
+
+router.post("/charge", async (req, res) => {
+	let data = req.body;
+	data.query = req.query;
+	stripe.customers
+		.create({
+			email: data.stripeEmail,
+			source: data.stripeToken,
+			name: data.query.name
+		})
+		.then((user) => {
+			return stripe.charges.create({
+				amount: data.query.amount * 100,
+				description: "Donation",
+				currency: "USD",
+				customer: user.id,
+			});
+		})
+		.then((charge) => {
+			// Code here to send email and add donation to database
+		})
+		.catch((err) => {
+			res.send(err); // If some error occurs
+		});
 });
 
 router.get("/logout", async (req, res) => {
@@ -73,11 +103,5 @@ router.get("/logout", async (req, res) => {
 	// await req.flash("info", "Logged out successfully");
 	res.redirect("/");
 });
-
-// Test method for notifications
-// router.get("/flash", async (req, res)=>{
-// 	await req.flash("info", "This is a test");
-// 	res.redirect("/");
-// });
 
 module.exports = router;

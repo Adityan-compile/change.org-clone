@@ -40,9 +40,13 @@ app.engine(
 	})
 );
 
-// Configure helper to calculate percentage in template
+// Configure helpers for templates
 handleBars.registerHelper("percentage", (signed, goal)=> {
   return signed/goal*100;
+});
+
+handleBars.registerHelper("calcAmount", (amount)=> {
+  return amount*100;
 });
 
 app.use(logger("dev"));
