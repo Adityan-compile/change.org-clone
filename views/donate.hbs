@@ -6,7 +6,12 @@
 	</p>
 
 	<section class="p-5">
-		<form id="payment-form" type="application/json" action="/donate" method="POST">
+		<form
+			id="payment-form"
+			type="application/json"
+			action="/donate"
+			method="POST"
+		>
 			{{#if loggedIn}}
 			<div class="row mb-4">
 				<div class="col">
@@ -17,6 +22,7 @@
 							name="name"
 							value="{{user.name}}"
 							class="form-control"
+							required="true"
 						/>
 						<label class="form-label" for="fullName"
 							>Full Name</label
@@ -31,6 +37,7 @@
 							name="email"
 							value="{{user.email}}"
 							class="form-control"
+							required="true"
 						/>
 						<label class="form-label" for="email"
 							>Email address</label
@@ -42,7 +49,13 @@
 			<div class="row mb-4">
 				<div class="col">
 					<div class="form-outline">
-						<input type="text" name="name" id="fullName" class="form-control" />
+						<input
+							type="text"
+							name="name"
+							id="fullName"
+							required="true"
+							class="form-control"
+						/>
 						<label class="form-label" for="fullName"
 							>Full Name</label
 						>
@@ -50,7 +63,13 @@
 				</div>
 				<div class="col">
 					<div class="form-outline">
-						<input type="email" id="email" name="email" class="form-control" />
+						<input
+							type="email"
+							id="email"
+							name="email"
+							class="form-control"
+							required="true"
+						/>
 						<label class="form-label" for="email"
 							>Email address</label
 						>
@@ -58,6 +77,74 @@
 				</div>
 			</div>
 			{{/if}}
+
+			<div class="row mb-4">
+				<div class="col">
+					<div class="form-outline">
+						<input
+							type="address"
+							id="address"
+							name="address"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="address"
+							>Address (1234 Main St)</label
+						>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-outline">
+						<input
+							type="text"
+							id="country"
+							name="country"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="country">Country</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="row mb-4">
+				<div class="col">
+					<div class="form-outline">
+						<input
+							type="text"
+							id="city"
+							name="city"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="city">City</label>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-outline">
+						<input
+							type="text"
+							id="state"
+							name="state"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="state">State</label>
+					</div>
+				</div>
+				<div class="col">
+					<div class="form-outline">
+						<input
+							type="number"
+							id="zip"
+							name="zip"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="zip">Postal/zip Code</label>
+					</div>
+				</div>
+			</div>
 
 			<div class="form-outline mb-4">
 				<label for="amount" class="form-label">Donation Amount</label>
@@ -69,6 +156,7 @@
 						max="1000"
 						id="amount"
 						name="amount"
+						required="true"
 					/>
 				</div>
 			</div>
@@ -92,9 +180,9 @@
 		});
 	</script>
 	<script>
-	   window.addEventListener("load", ()=>{
-	   	 amount.value = 1;
-	   	 donateBtn.innerHTML= "Donate $" + amount.value;
-	   });
+		window.addEventListener("load", () => {
+			amount.value = 1;
+			donateBtn.innerHTML = "Donate $" + amount.value;
+		});
 	</script>
 </div>

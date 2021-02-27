@@ -1,10 +1,16 @@
-var mongoClient = require("mongodb").mongoClient;
-var db = require("../config/connection");
-var collections = require("../config/collections");
-
+var mongoClient = require('mongodb').mongoClient;
+var db = require('../config/connection');
 
 module.exports = {
-	addDonation: (data)=>{
-		console.log("inside addDonation");
-	}
-}
+  addDonation: (data) => {
+    return new Promise(async (resolve, reject) => {
+      await db
+        .get()
+        .collection(process.env.DONATION_COLLECTION)
+        .insertOne(data)
+        .then((response) => {
+          resolve(response.ops[0]);
+        });
+    });
+  },
+};
