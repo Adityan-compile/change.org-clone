@@ -1,13 +1,13 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var session = require('express-session');
-var logger = require('morgan');
-var hbs = require('express-handlebars');
-var handleBars = require('handlebars');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const logger = require('morgan');
+const hbs = require('express-handlebars');
+const handleBars = require('handlebars');
 const {flash} = require('express-flash-message');
-var Promise = require('promise');
+const Promise = require('promise');
 
 env = require('dotenv').config();
 
@@ -18,14 +18,14 @@ if (env.error) {
   console.log('Environment Variables Loaded Successfully');
 }
 
-var indexRouter = require('./routes/index');
-var petitionsRouter = require('./routes/petitions');
+const indexRouter = require('./routes/index');
+const petitionsRouter = require('./routes/petitions');
 
 // Configure db
-var db = require('./config/connection');
+const db = require('./config/connection');
 
 // Initialize app
-var app = express();
+const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

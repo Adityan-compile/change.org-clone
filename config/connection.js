@@ -1,8 +1,8 @@
-let MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
-let host = process.env.DB_HOST;
-let dbName = process.env.DB_NAME;
-let state = {
+const host = process.env.DB_HOST;
+const dbName = process.env.DB_NAME;
+const state = {
   db: null,
 };
 

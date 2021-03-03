@@ -1,11 +1,11 @@
-var emailCheck = require('email-check');
-var bcrypt = require('bcrypt');
-var db = require('../config/connection');
+const emailCheck = require('email-check');
+const bcrypt = require('bcrypt');
+const db = require('../config/connection');
 
 module.exports = {
   validate: (email) => {
     return new Promise(async (resolve, reject) => {
-      let response = {};
+      const response = {};
       await emailCheck(email)
         .then((res) => {
           response.status = true;
@@ -35,9 +35,9 @@ module.exports = {
 
   login: (data) => {
     return new Promise(async (resolve, reject) => {
-      let loggedIn = false;
-      let response = {};
-      let user = await db
+      const loggedIn = false;
+      const response = {};
+      const user = await db
         .get()
         .collection(process.env.USER_COLLECTION)
         .findOne({email: data.email});
@@ -55,6 +55,11 @@ module.exports = {
         resolve({status: false});
       }
     });
+  },
+
+  logout: (req, res) => {
+    req.session.destroy();
+    res.redirect('/');
   },
 
   deleteUser: (userId) => {

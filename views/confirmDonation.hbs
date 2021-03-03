@@ -1,6 +1,6 @@
 <h2 class="text-center fw-bold p-4">CONFIRM DONATION</h2>
 <h4 class="text-center text-dark fw-bold p-4">
-  Confirm Your Donation of ${{data.amount}}
+  Confirm Your Donation of &#8377;{{data.amount}}
 </h4>
 <p class="text-center text-dark fw-bold p-4">
   By donating you are being a part of a generous group of people who helps us
@@ -17,7 +17,7 @@
       class="stripe-button"
       data-key="{{public_key}}"
       data-amount="{{calcAmount data.amount}}"
-      data-currency="USD"
+      data-currency="INR"
       data-name="{{data.name}}"
       data-email="{{data.email}}"
       data-image="/icons/android-chrome-512x512.png"
@@ -29,7 +29,7 @@
         "none";
     </script>
     <button class="btn btn-outline-dark" type="submit">
-      Donate ${{data.amount}}
+      Donate &#8377;{{data.amount}}
     </button>
   </form>
 </section>

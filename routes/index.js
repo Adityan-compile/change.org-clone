@@ -1,21 +1,21 @@
-var express = require('express');
-var userHelpers = require('../helpers/userHelpers');
-var petitionHelpers = require('../helpers/petitionHelpers');
-var donationHelpers = require('../helpers/DonationHelpers');
-var router = express.Router();
-var stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+const express = require('express');
+const userHelpers = require('../helpers/userHelpers');
+const petitionHelpers = require('../helpers/petitionHelpers');
+const donationHelpers = require('../helpers/donationHelpers');
+const router = express.Router();
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 /* GET home page. */
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   await petitionHelpers.getLimitedPetitions().then(async (petitions) => {
     const messages = await req.consumeFlash('info');
-    let loggedIn = req.session.loggedIn;
+    const loggedIn = req.session.loggedIn;
     res.render('index', {title: 'LIFE', messages, petitions, loggedIn});
   });
 });
 
 router.post('/login', async (req, res) => {
-  let data = req.body;
+  const data = req.body;
   await userHelpers.login(data).then(async (response) => {
     if (response.status) {
       req.session.loggedIn = true;
@@ -30,7 +30,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/signup', async (req, res) => {
-  let data = req.body;
+  const data = req.body;
   await userHelpers.validate(data.email).then(async (response) => {
     await userHelpers.signUp(data).then(async (result) => {
       if (result.status) {
@@ -49,36 +49,31 @@ router.post('/signup', async (req, res) => {
 router
   .route('/donate')
   .get((req, res) => {
-    let loggedIn = req.session.loggedIn;
-    let user = req.session.user;
-    let public_key = process.env.STRIPE_PUBLIC_KEY;
+    const loggedIn = req.session.loggedIn;
+    const user = req.session.user;
+    const public_key = process.env.STRIPE_PUBLIC_KEY;
     res.render('donate', {title: 'LIFE', loggedIn, user, public_key});
   })
   .post((req, res) => {
-    let data = req.body;
-    let encodedEmail = encodeURIComponent(data.email);
-    let encodedAddress = encodeURIComponent(data.address);
+    const data = req.body;
+    const encodedEmail = encodeURIComponent(data.email);
+    const encodedAddress = encodeURIComponent(data.address);
     data.url = `/donate/confirm?name=${data.name}&email=${encodedEmail}&amount=${data.amount}&address=${encodedAddress}&country=${data.country}&state=${data.state}&city=${data.city}&zip=${data.zip}`;
     res.redirect(data.url);
   });
 
 router.get('/donate/confirm', (req, res) => {
-  let data = req.query;
+  const data = req.query;
   data.email = decodeURIComponent(data.email);
-  let public_key = process.env.STRIPE_PUBLIC_KEY;
+  const public_key = process.env.STRIPE_PUBLIC_KEY;
   res.render('confirmDonation', {title: 'LIFE', data, public_key});
 });
 
-/* TODO
-   [] Create Success route
-   [] Add donation to database
-   [] Send email after donation success
- */
-
 router.post('/charge', async (req, res) => {
-  let data = req.body;
+  const data = req.body;
   data.query = req.query;
   data.query.address = decodeURIComponent(data.query.address);
+  data.query.email = data.email;
   stripe.customers
     .create({
       email: data.stripeEmail,
@@ -96,22 +91,57 @@ router.post('/charge', async (req, res) => {
       return stripe.charges.create({
         amount: data.query.amount * 100,
         description: 'Donation',
-        currency: 'USD',
+        currency: 'INR',
         customer: user.id,
       });
     })
-    .then(async (charge) => {
-      console.log(charge);
+    .then(async (charged) => {
+      data.receipt = charged.receipt_url;
+      await donationHelpers.addDonation(data).then(async (response) => {
+        if (response.status) {
+          req.session.accessRestricted = true;
+          data.receipt = await encodeURIComponent(data.receipt);
+          res.redirect(
+            `/donate/success?receipt=${data.receipt}&amount=${data.query.amount}`
+          );
+        }
+      });
     })
     .catch((err) => {
-      res.send(err); // If some error occurs
+      req.session.accessRestricted = true;
+      res.redirect('/donate/failed');
     });
 });
 
-router.get('/logout', async (req, res) => {
-  req.session.destroy();
-  // await req.flash("info", "Logged out successfully");
-  res.redirect('/');
+router.get('/donate/success', async (req, res) => {
+  const data = req.query;
+  data.receipt = decodeURIComponent(data.receipt);
+  if (req.session.accessRestricted) {
+    req.session.accessRestricted = false;
+    res.render('success', {title: 'LIFE', data});
+  } else {
+    await req.flash('info', 'Access Restricted');
+    res.redirect('/');
+  }
 });
+
+router.get('/donate/failed', async (req, res) => {
+  if (req.session.accessRestricted) {
+    req.session.accessRestricted = false;
+    res.render('failed', {title: 'LIFE'});
+  } else {
+    await req.flash('info', 'Access Restricted');
+    res.redirect('/');
+  }
+});
+
+router
+  .route('/logout')
+  .get((req, res) => {
+    userHelpers.logout(req, res);
+  })
+  .post((req, res) => {
+    userHelpers.logout(req, res);
+  });
 
 module.exports = router;

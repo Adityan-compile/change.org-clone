@@ -5,9 +5,9 @@
   "scripts": {
     "start": "node ./bin/www",
     "dev-server": "nodemon ./bin/www",
-    "lint": "./node_modules/.bin/eslint --ignore-path .gitignore",
-    "clean": "./node_modules/.bin/prettier --single-quote --trailing-comma es5 --print-width 80 --write --no-bracket-spacing **/*.js *.js ",
-    "build": "npm run lint"
+    "lint": "standard --fix",
+    "clean": "./node_modules/.bin/prettier --semi --single-quote --trailing-comma es5 --print-width 80 --write --no-bracket-spacing **/*.js *.js ",
+    "build": "npm run clean && npm run lint"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",
@@ -28,10 +28,9 @@
     "stripe": "^8.134.0"
   },
   "devDependencies": {
-    "eslint": "^7.20.0",
-    "eslint-config-strongloop": "^2.1.0",
     "kill-port": "^1.6.1",
     "nodemon": "^2.0.7",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "standard": "^16.0.3"
   }
 }

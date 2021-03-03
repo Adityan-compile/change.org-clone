@@ -1,22 +1,22 @@
-var mongoClient = require('mongodb').mongoClient;
-var db = require('../config/connection');
+const mongoClient = require('mongodb').mongoClient;
+const db = require('../config/connection');
 
 module.exports = {
   createPetition: (data, userId) => {
     return new Promise(async (resolve, reject) => {
-      let date_ob = new Date();
+      const date_ob = new Date();
 
       // current date
       // adjust 0 before single digit date
-      let date = ('0' + date_ob.getDate()).slice(-2);
+      const date = ('0' + date_ob.getDate()).slice(-2);
 
       // current month
-      let month = ('0' + (date_ob.getMonth() + 1)).slice(-2);
+      const month = ('0' + (date_ob.getMonth() + 1)).slice(-2);
 
       // current year
-      let year = date_ob.getFullYear();
+      const year = date_ob.getFullYear();
 
-      let today = date + '/' + month + '/' + year;
+      const today = date + '/' + month + '/' + year;
 
       data.dateCreated = today;
       data.signed = 1;
@@ -32,7 +32,7 @@ module.exports = {
     });
   },
 
-  /* 
+  /*
   TODO:
   [] Allow one user to sign a petition only once.
   [] Maintain a seperate collection for signed petitions.
@@ -61,7 +61,7 @@ module.exports = {
 
   getLimitedPetitions: () => {
     return new Promise(async (resolve, reject) => {
-      var petitions = await db
+      const petitions = await db
         .get()
         .collection(process.env.PETITION_COLLECTION)
         .find()
@@ -73,7 +73,7 @@ module.exports = {
   },
   getAllPetitions: () => {
     return new Promise(async (resolve, reject) => {
-      var petitions = await db
+      const petitions = await db
         .get()
         .collection(process.env.PETITION_COLLECTION)
         .find()
@@ -85,7 +85,7 @@ module.exports = {
 
   search: (query) => {
     return new Promise(async (resolve, reject) => {
-      var results = await db
+      const results = await db
         .get()
         .collection(process.env.PETITION_COLLECTION)
         .find({
