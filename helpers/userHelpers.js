@@ -21,6 +21,8 @@ module.exports = {
 
   signUp: (userData) => {
     return new Promise(async (resolve, reject) => {
+      await db.get().collection(process.env.USER_COLLECTION).find({"email": userData.email}).toArray().then(async(response)=>{
+      if(response){
       userData.password = await bcrypt.hash(userData.password, 10);
       await db
         .get()
@@ -30,6 +32,11 @@ module.exports = {
           data.ops[0].status = true;
           resolve(data.ops[0]);
         });
+      }else{
+        data.ops[0].status = false;
+        resolve(data.ops[0]);
+      }
+      });
     });
   },
 

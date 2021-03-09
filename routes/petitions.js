@@ -2,10 +2,6 @@ const express = require('express');
 const router = express.Router();
 const petitionHelpers = require('../helpers/petitionHelpers');
 
-/*
-  TODO:
-  [x]Rewrite function to create a new petition.
-*/
 
 router.post('/new', async (req, res) => {
   const data = req.body;
@@ -15,7 +11,7 @@ router.post('/new', async (req, res) => {
   if (loggedIn) {
     await petitionHelpers
       .createPetition(data, user._id)
-      .then(async (response) => {
+      .then(async(response) => {
         if (response) {
           await req.flash('info', 'Petition created successfully');
           res.redirect('/');
@@ -30,12 +26,19 @@ router.post('/new', async (req, res) => {
   }
 });
 
-// router.post("/sign?:_id", async (req, res) => {
-//   if (req.session.loggedIn) {
-//     let _id = req.params._id;
-//     await petitionHelpers.sign(_id);
-//   }
-// });
+router.get("/sign", async (req, res) => {
+  if (req.session.loggedIn) {
+    let data = req.query;
+    await petitionHelpers.sign(data.id, req.session.user._id).then(async(response)=>{
+      if(response){
+        await req.flash('info', 'Petition Signed Successfully');
+        res.redirect("/");
+      }else{
+        await req.flash('info', 'Failed to Sign Petition');
+      }
+    });
+  }
+});
 
 router.get('/browse', async (req, res) => {
   await petitionHelpers.getAllPetitions().then(async (petitions) => {
