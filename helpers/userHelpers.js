@@ -62,6 +62,22 @@ module.exports = {
     res.redirect('/');
   },
 
+  updateUser: (data, userId)=>{
+    return new Promise(async (resolve, reject) => {
+      let response = {};
+      response.status = false;
+      await db.get().collection(process.env.USER_COLLECTION).updateOne({"_id": ObjectId(userId)}, {
+        $set:{
+          "name": data.name,
+          "email": data.email
+        }
+      }).then((res)=>{
+        response.status = true
+        resolve(response);
+      })
+    });
+  },
+
   deleteUser: (userId) => {
     return new Promise(async (resolve, reject) => {
       let status = false;

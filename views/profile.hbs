@@ -1,0 +1,46 @@
+<h4 class="text-center fw-bold pt-4">PROFILE</h4>
+
+<section class="profile text-dark text-center p-4">
+	<form class="p-4" method="POST" action="/user/profile/edit">
+		<div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">Name</label>
+			<input
+				type="email"
+				class="form-control"
+				value="{{user.name}}"
+				id="exampleInputEmail1"
+				aria-describedby="emailHelp"
+			/>
+		</div>
+		<div class="mb-3">
+			<label for="exampleInputEmail1" class="form-label">Email</label>
+			<input
+				type="email"
+				class="form-control"
+				value="{{user.email}}"
+				id="exampleInputEmail1"
+				aria-describedby="emailHelp"
+			/>
+		</div>
+		<button type="submit" class="btn btn-outline-primary">Update</button>
+	</form>
+	<button class="btn btn-outline-danger btn-md mb-4">Delete Account</button>
+</section>
+
+<section class="petitions container">
+ 
+<div class="row mb-4">
+	{{#each petitions}}
+	<div class="col-md-4">
+		<div class="card" style="width: 18rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{this.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{this.dateCreated}}</h6>
+    <p class="card-text">{{this.description}}</p>
+    <a href="#" class="btn btn-danger">Delete</a>
+  </div>
+</div>
+	</div>
+</div>
+
+	</section>

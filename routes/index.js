@@ -46,6 +46,31 @@ router.post('/signup', async (req, res) => {
   });
 });
 
+router.get("/user/profile", async(req, res)=>{
+  if(req.session.user){
+    let user = req.session.user;
+     res.render("profile.hbs", {title: 'LIFE', user});
+  }else{
+    await req.flash('info', 'Please Login');
+    res.redirect("/");
+  }
+});
+
+router.post("/user/profile/edit", async(req, res)=>{
+   let data = req.body;
+
+   await userHelpers.updateUser(data).then(async (response)=>{
+    if (response.status) {
+      await req.flash('info', 'Profile Updated Successfully');
+      res.redirect("/user/profile");
+    }else{
+      await req.flash('info', 'Profile Update Failed');
+      res.redirect("/user/profile");
+    }
+   });
+
+});
+
 router
   .route('/donate')
   .get((req, res) => {
