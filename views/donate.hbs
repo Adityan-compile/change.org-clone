@@ -1,105 +1,188 @@
-<h4 class="text-center fw-bold p-4">DONATE</h4>
+<div class="donate">
+	<h4 class="text-center fw-bold p-4">DONATE</h4>
 
-<section class="donate p-5">
-	<form>
-		<div class="row mb-4">
-			<div class="col">
-				<div class="form-outline">
-					<input type="text" id="fullName" class="form-control" />
-					<label class="form-label" for="fullName">Full Name</label>
-				</div>
-			</div>
-			<div class="col">
-				<div class="form-outline">
-					<input type="email" id="email" class="form-control" />
-					<label class="form-label" for="email">Email address</label>
-				</div>
-			</div>
-		</div>
+	<p class="text-dark fw-bold text-center p-3">
+		Donate and help change lives all around the world
+	</p>
 
-		<div class="row mb-4">
-			<div class="col">
-				<div class="form-outline">
-					<input type="text" id="cardNumber" class="form-control" />
-					<label class="form-label" for="cardNumber"
-						>Card Number</label
-					>
-				</div>
-			</div>
-			<div class="col">
-				<div class="form-outline">
-					<input type="number" id="cvv" class="form-control" />
-					<label class="form-label" for="cvv">CVV</label>
-				</div>
-			</div>
-			<div class="col">
-				{{!--
-				<div class="input-group form-outline">
-					<input
-						type="text"
-						id="expiry"
-						class="form-control"
-						name="expiry"
-					/>
-					<label class="form-label" for="expiry">YYYY-MM</label>
-				</div>
-				--}}
-
-				<div class="input-container form-outline">
-					<input
-						class="input-field form-control"
-						type="text"
-						id="expiry"
-						name="cardExpiry"
-						minlength="8"
-					/>
-					<i
-						class="fa fa-calendar icon text-dark"
-						id="expiryBtn"
-						role="button"
-						onclick="showCalendarControl('expiry');"
-					></i>
-					<label class="form-label" for="expiry">MM-YYYY</label>
-				</div>
-			</div>
-		</div>
-
-{{!--		<script>
-		 	document
-		 		.querySelector("#expiryBtn")
-		 		.addEventListener("click", showCalendarControl('expiry'));
-		 </script>   --}}
-
-		<div class="form-outline mb-4">
-			<label for="amount" class="form-label">Donation Amount</label>
-			<div class="range">
-				<input
-					type="range"
-					class="form-range"
-					min="10"
-					max="9000"
-					id="amount"
-					value="10"
-				/>
-			</div>
-		</div>
-
-		<!-- Checkbox -->
-		<button
-			type="submit"
-			id="donateBtn"
-			class="btn btn-primary btn-block mb-4"
+	<section class="p-5">
+		<form
+			id="payment-form"
+			type="application/json"
+			action="/donate"
+			method="POST"
 		>
-			Donate &#8377;10
-		</button>
-	</form>
-</section>
+			{{#if loggedIn}}
+			<div class="row mb-4">
+				<div class="form-group col-md-6">
+					<div class="form-outline mb-4">
+						<input
+							type="text"
+							id="fullName"
+							name="name"
+							value="{{user.name}}"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="fullName"
+							>Full Name</label
+						>
+					</div>
+				</div>
+				<div class="form-group col-md-6">
+					<div class="form-outline mb-4">
+						<input
+							type="email"
+							id="email"
+							name="email"
+							value="{{user.email}}"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="email"
+							>Email address</label
+						>
+					</div>
+				</div>
+			</div>
+			{{else}}
+			<div class="row mb-4">
+				<div class="form-group col-md-6">
+					<div class="form-outline mb-4">
+						<input
+							type="text"
+							name="name"
+							id="fullName"
+							required="true"
+							class="form-control"
+						/>
+						<label class="form-label" for="fullName"
+							>Full Name</label
+						>
+					</div>
+				</div>
+				<div class="form-group col-md-6">
+					<div class="form-outline mb-4">
+						<input
+							type="email"
+							id="email"
+							name="email"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="email"
+							>Email address</label
+						>
+					</div>
+				</div>
+			</div>
+			{{/if}}
 
-<script>
-	let donateBtn = document.querySelector("#donateBtn");
-	let amount = document.querySelector("#amount");
+			<div class="row mb-4">
+				<div class="form-group col-md-6">
+					<div class="form-outline mb-4">
+						<input
+							type="address"
+							id="address"
+							name="address"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="address"
+							>Address (1234 Main St)</label
+						>
+					</div>
+				</div>
+				<div class="form-group col-md-6">
+					<div class="form-outline mb-4">
+						<input
+							type="text"
+							id="country"
+							name="country"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="country">Country</label>
+					</div>
+				</div>
+			</div>
 
-	amount.addEventListener("change", () => {
-		donateBtn.innerHTML = "Donate &#8377;" + amount.value;
-	});
-</script>
+			<div class="row mb-4">
+				<div class="form-group col-md-4">
+					<div class="form-outline mb-4">
+						<input
+							type="text"
+							id="city"
+							name="city"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="city">City</label>
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="form-outline mb-4">
+						<input
+							type="text"
+							id="state"
+							name="state"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="state">State</label>
+					</div>
+				</div>
+				<div class="form-group col-md-4">
+					<div class="form-outline mb-4">
+						<input
+							type="number"
+							id="zip"
+							name="zip"
+							class="form-control"
+							required="true"
+						/>
+						<label class="form-label" for="zip">Postal/zip Code</label>
+					</div>
+				</div>
+			</div>
+
+			<div class="form-outline mb-4">
+				<label for="amount" class="form-label">Donation Amount</label>
+				<div class="range">
+					<input
+						type="range"
+						class="form-range"
+						min="1"
+						max="9000"
+						id="amount"
+						name="amount"
+						required="true"
+					/>
+				</div>
+			</div>
+
+			<button
+				type="submit"
+				id="donateBtn"
+				class="btn btn-primary btn-block mb-4"
+			>
+				Donate &#8377;1
+			</button>
+		</form>
+	</section>
+
+	<script>
+		var donateBtn = document.querySelector("#donateBtn");
+		var amount = document.querySelector("#amount");
+
+		amount.addEventListener("change", () => {
+			donateBtn.innerHTML = "Donate &#8377;" + amount.value;
+		});
+	</script>
+	<script>
+		window.addEventListener("load", () => {
+			amount.value = 1;
+			donateBtn.innerHTML = "Donate &#8377;" + amount.value;
+		});
+	</script>
+</div>

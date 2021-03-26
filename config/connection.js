@@ -1,25 +1,23 @@
-let MongoClient = require('mongodb').MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 
-let host = process.env.DB_HOST;
-let dbName = process.env.DB_NAME;
-let state = {
-        db : null
-}
+const host = process.env.DB_HOST;
+const dbName = process.env.DB_NAME;
+const state = {
+  db: null,
+};
 
+module.exports.connect = function (done) {
+  MongoClient.connect(host, (err, data) => {
+    if (err) {
+      return done(err);
+    } else {
+      state.db = data.db(dbName);
+    }
+  });
 
-module.exports.connect = function(done){
-        MongoClient.connect(host, (err,data)=>{
-                if (err) {
-                        return done(err)
-                }else{
-                        state.db = data.db(dbName)
-                }
-        });
+  done();
+};
 
-        done()
-}
-
-
-module.exports.get = function(){
-        return state.db
-}
+module.exports.get = function () {
+  return state.db;
+};
