@@ -29,7 +29,8 @@ router.post('/new', async (req, res) => {
 router.get("/sign", async (req, res) => {
   if (req.session.loggedIn) {
     let data = req.query;
-    await petitionHelpers.sign(data.id, req.session.user._id).then(async(response)=>{
+    let user = req.session.user;
+    await petitionHelpers.sign(data.id, user._id).then(async(response)=>{
       if(response){
         await req.flash('info', 'Petition Signed Successfully');
         res.redirect("/");
@@ -60,11 +61,12 @@ router.get('/search', async (req, res) => {
   res.render('search', {title: 'LIFE', messages, loggedIn});
 });
 
-router.get('/results?:search_query', async (req, res) => {
-  const searchQuery = req.query.search_query;
+router.get('/results', async (req, res) => {
+  var searchQuery = req.query.search_query;
+  console.log(searchQuery);
   await petitionHelpers.search(searchQuery).then((results) => {
     const loggedIn = req.session.loggedIn;
-    res.render('search', {title: 'LIFE', results, loggedIn});
+    res.render('search', {title: 'LIFE', results, loggedIn, searchQuery});
   });
 });
 

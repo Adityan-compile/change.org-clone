@@ -1,5 +1,6 @@
 const mongoClient = require("mongodb").mongoClient;
 const db = require("../config/connection");
+const ObjectId = require("mongodb").ObjectID;
 
 module.exports = {
   createPetition: (data, userId) => {
@@ -43,12 +44,10 @@ module.exports = {
       await db
         .get()
         .collection(process.env.USER_COLLECTION)
-        .find({ _id: objectId(userId) })
+        .find({ _id: ObjectId(userId) })
         .toArray()
         .then(async (res) => {
           if (res) {
-            resolve(false);
-          } else {
             await db
               .get()
               .collection(process.env.PETITION_COLLECTION)
@@ -68,6 +67,8 @@ module.exports = {
               .then((response) => {
                 resolve(true);
               });
+          } else {
+            resolve(false);
           }
         });
     });

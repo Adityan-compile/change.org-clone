@@ -7,7 +7,6 @@ const logger = require('morgan');
 const hbs = require('express-handlebars');
 const handleBars = require('handlebars');
 const {flash} = require('express-flash-message');
-const fileStore = require('session-file-store')(session);
 const Promise = require('promise');
 
 env = require('dotenv').config();
@@ -58,7 +57,6 @@ app.use(cookieParser());
 app.use(
   session({
     secret: process.env.SECRET_KEY,
-    store: new fileStore(),
     cookie: {
       maxAge: 2592000000,
     },
@@ -83,6 +81,7 @@ db.connect((err) => {
 
 app.use('/', indexRouter);
 app.use('/petitions', petitionsRouter);
+
 
 // catch error and forward to error handler
 app.use(function (req, res, next) {
@@ -114,5 +113,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {layout: false});
 });
+
 
 module.exports = app;
