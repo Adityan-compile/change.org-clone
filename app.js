@@ -7,6 +7,7 @@ const logger = require('morgan');
 const hbs = require('express-handlebars');
 const handleBars = require('handlebars');
 const {flash} = require('express-flash-message');
+const MongoStore = require('connect-mongo');
 const Promise = require('promise');
 
 env = require('dotenv').config();
@@ -60,6 +61,7 @@ app.use(
     cookie: {
       maxAge: 2592000000,
     },
+    store: MongoStore.create({ mongoUrl: `${process.env.DB_HOST}/${process.env.DB_NAME}` }),
     saveUninitialized: false,
     resave: true,
   })

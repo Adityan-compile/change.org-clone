@@ -81,14 +81,17 @@ module.exports = {
       await db
         .get()
         .collection(process.env.USER_COLLECTION)
-        .updateOne(
+        .findOneAndUpdate(
           { _id: ObjectId(userId) },
           {
             $set: {
               name: data.name,
               email: data.email,
+            },
+          },
+            {
+              returnOriginal: false, upsert: true
             }
-          }
         )
         .then((res) => {
           console.log(res);
