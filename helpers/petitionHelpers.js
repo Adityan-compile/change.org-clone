@@ -1,6 +1,6 @@
-const mongoClient = require("mongodb").mongoClient;
-const db = require("../config/connection");
-const ObjectId = require("mongodb").ObjectID;
+const mongoClient = require('mongodb').mongoClient;
+const db = require('../config/connection');
+const ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
   createPetition: (data, userId) => {
@@ -9,15 +9,15 @@ module.exports = {
 
       // current date
       // adjust 0 before single digit date
-      const date = ("0" + date_ob.getDate()).slice(-2);
+      const date = ('0' + date_ob.getDate()).slice(-2);
 
       // current month
-      const month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+      const month = ('0' + (date_ob.getMonth() + 1)).slice(-2);
 
       // current year
       const year = date_ob.getFullYear();
 
-      const today = date + "/" + month + "/" + year;
+      const today = date + '/' + month + '/' + year;
 
       data.dateCreated = today;
       data.signed = 1;
@@ -43,30 +43,39 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       await db
         .get()
-        .collection(process.env.USER_COLLECTION)
-        .find({ _id: ObjectId(userId) })
+        .collection(process.env.PETITION_COLLECTION)
+        .find({_id: ObjectId(id)})
         .toArray()
         .then(async (res) => {
           if (res) {
-            await db
-              .get()
-              .collection(process.env.PETITION_COLLECTION)
-              .update(
-                {
-                  _id: ObjectId(id),
-                },
-                {
-                  $inc: {
-                    signed: 1,
+            console.log(res[0]);
+            if (
+              res[0].signedUsers.find((user) => {
+                return user === userId;
+              })
+            ) {
+              resolve(false);
+            } else {
+              await db
+                .get()
+                .collection(process.env.PETITION_COLLECTION)
+                .update(
+                  {
+                    _id: ObjectId(id),
                   },
-                  $push: {
-                    signedUsers: userId,
-                  },
-                }
-              )
-              .then((response) => {
-                resolve(true);
-              });
+                  {
+                    $inc: {
+                      signed: 1,
+                    },
+                    $push: {
+                      signedUsers: userId,
+                    },
+                  }
+                )
+                .then((response) => {
+                  resolve(true);
+                });
+            }
           } else {
             resolve(false);
           }
@@ -80,7 +89,7 @@ module.exports = {
         .get()
         .collection(process.env.PETITION_COLLECTION)
         .find()
-        .sort({ _id: -1 })
+        .sort({_id: -1})
         .limit(5)
         .toArray();
       resolve(petitions);
@@ -92,7 +101,7 @@ module.exports = {
         .get()
         .collection(process.env.PETITION_COLLECTION)
         .find()
-        .sort({ _id: -1 })
+        .sort({_id: -1})
         .toArray();
       resolve(petitions);
     });
@@ -106,10 +115,10 @@ module.exports = {
         .find({
           title: {
             $regex: new RegExp(query),
-            $options: "-i",
+            $options: '-i',
           },
         })
-        .sort({ _id: -1 })
+        .sort({_id: -1})
         .toArray();
 
       resolve(results);

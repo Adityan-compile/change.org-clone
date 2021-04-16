@@ -1,7 +1,7 @@
-const emailCheck = require("email-check");
-const bcrypt = require("bcrypt");
-const db = require("../config/connection");
-const ObjectId = require("mongodb").ObjectID;
+const emailCheck = require('email-check');
+const bcrypt = require('bcrypt');
+const db = require('../config/connection');
+const ObjectId = require('mongodb').ObjectID;
 
 module.exports = {
   validate: (email) => {
@@ -25,7 +25,7 @@ module.exports = {
       await db
         .get()
         .collection(process.env.USER_COLLECTION)
-        .find({ email: userData.email })
+        .find({email: userData.email})
         .toArray()
         .then(async (response) => {
           if (response) {
@@ -52,7 +52,7 @@ module.exports = {
       const user = await db
         .get()
         .collection(process.env.USER_COLLECTION)
-        .findOne({ email: data.email });
+        .findOne({email: data.email});
       if (user) {
         await bcrypt.compare(data.password, user.password).then((status) => {
           if (status) {
@@ -71,7 +71,7 @@ module.exports = {
 
   logout: (req, res) => {
     req.session.destroy();
-    res.redirect("/");
+    res.redirect('/');
   },
 
   updateUser: (data, userId) => {
@@ -81,21 +81,20 @@ module.exports = {
       await db
         .get()
         .collection(process.env.USER_COLLECTION)
-        .findOneAndUpdate(
-          { _id: ObjectId(userId) },
+        .updateOne(
+          {_id: ObjectId(userId)},
           {
             $set: {
               name: data.name,
               email: data.email,
             },
-          },
-            {
-              returnOriginal: false, upsert: true
-            }
+          }
         )
         .then((res) => {
           console.log(res);
-          response.status = true;
+          res.updatedExisting === true
+            ? (response.status = true)
+            : (response.status = false);
           resolve(response);
         });
     });
@@ -107,10 +106,10 @@ module.exports = {
       await db
         .get()
         .collection(process.env.USER_COLLECTION)
-        .deleteOne({ _id: ObjectId(userId) })
+        .deleteOne({_id: ObjectId(userId)})
         .then((res) => {
           console.log(res);
-          if (res.acknowledged && res.deletedCount == "1") {
+          if (res.acknowledged && res.deletedCount == '1') {
             status = true;
             resolve(status);
           } else {

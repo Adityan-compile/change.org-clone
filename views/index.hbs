@@ -1,51 +1,37 @@
-{{!-- {{#> header}} --}}
-{{!--   <header class="text-white">
-      {{> header}}
-  </header> --}}
-{{!-- {{/header}} --}}
+{{!-- {{#> header}} --}} {{!--
+<header class="text-white">{{> header}}</header>
+--}} {{!-- {{/header}} --}}
 
 <!-- Home  -->
 <section class="text-center text-white home p-4 fw-bold">
-  <h3 class="p-4 mb-2 home-text">Let's bring change to the world.</h3>
-{{!--   <a href="/petitions/new" class=" home-text btn btn-outline-light mb-2">Start a Petition</a> --}}
-
-{{#if loggedIn}}
-
-{{> petitionForm}}
-
-{{else}}
-
-{{> signUp}} 
-{{> login}} 
-
-{{/if}}
-
+	<h3 class="p-4 mb-2 home-text">Let's bring change to the world.</h3>
+	{{!--
+	<a href="/petitions/new" class="home-text btn btn-outline-light mb-2"
+		>Start a Petition</a
+	>
+	--}} {{#if loggedIn}} {{> petitionForm}} {{else}} {{> signUp}} {{> login}}
+	{{/if}}
 </section>
 
 <!-- Petitions -->
 <section class="petitions p-4">
-  <h4 class="text-center p-4 mb-2">PETITIONS</h4>
+	<h4 class="text-center p-4 mb-2">PETITIONS</h4>
 
+	{{#if petitions}}
 
-{{#if petitions}}
+	<div class="row">{{#each petitions}} {{> petitionsCard}} {{/each}}</div>
 
-{{#each petitions}}
-
-{{> petitionsCard}}
-
-{{/each}}
-
-{{else}}
-{{#if loggedIn}}
-<p class="text-center text-muted">Whoops!! Looks like there are no Petitions here. Comeback later or create a new petition</p>
-{{else}}
-<p class="text-center text-muted">Whoops!! Looks like there are no Petitions here</p>
-{{/if}}
-{{/if}}
+	{{else}} {{#if loggedIn}}
+	<p class="text-center text-muted">
+		Whoops!! Looks like there are no Petitions here. Comeback later or
+		create a new petition
+	</p>
+	{{else}}
+	<p class="text-center text-muted">
+		Whoops!! Looks like there are no Petitions here
+	</p>
+	{{/if}} {{/if}}
 </section>
 
-
 <!-- Footer -->
-<footer class="footer bg-dark p-4 py-5">
-  {{> footer}}
-</footer>
+<footer class="footer bg-dark p-4 py-5">{{> footer}}</footer>

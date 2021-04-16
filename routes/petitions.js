@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const petitionHelpers = require('../helpers/petitionHelpers');
 
-
 router.post('/new', async (req, res) => {
   const data = req.body;
   const user = req.session.user;
@@ -11,7 +10,7 @@ router.post('/new', async (req, res) => {
   if (loggedIn) {
     await petitionHelpers
       .createPetition(data, user._id)
-      .then(async(response) => {
+      .then(async (response) => {
         if (response) {
           await req.flash('info', 'Petition created successfully');
           res.redirect('/');
@@ -26,15 +25,15 @@ router.post('/new', async (req, res) => {
   }
 });
 
-router.get("/sign", async (req, res) => {
+router.get('/sign', async (req, res) => {
   if (req.session.loggedIn) {
     let data = req.query;
     let user = req.session.user;
-    await petitionHelpers.sign(data.id, user._id).then(async(response)=>{
-      if(response){
+    await petitionHelpers.sign(data.id, user._id).then(async (response) => {
+      if (response) {
         await req.flash('info', 'Petition Signed Successfully');
-        res.redirect("/");
-      }else{
+        res.redirect('/');
+      } else {
         await req.flash('info', 'Failed to Sign Petition');
       }
     });

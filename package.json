@@ -6,7 +6,7 @@
     "start": "node ./bin/www",
     "dev-server": "nodemon ./bin/www -e hbs,js,css,html,jpg,png,ico,webmanifest,json",
     "lint": "standard --fix",
-    "clean": "./node_modules/.bin/prettier --semi --single-quote --trailing-comma es5 --print-width 80 --write --no-bracket-spacing **/*.js *.js ",
+    "format": "./node_modules/.bin/prettier --semi --single-quote --trailing-comma es5 --print-width 80 --write --no-bracket-spacing **/*.js *.js ",
     "build": "npm run clean && npm run lint"
   },
   "dependencies": {
