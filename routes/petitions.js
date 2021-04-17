@@ -35,6 +35,7 @@ router.get('/sign', async (req, res) => {
         res.redirect('/');
       } else {
         await req.flash('info', 'Failed to Sign Petition');
+        res.redirect('/');
       }
     });
   }
