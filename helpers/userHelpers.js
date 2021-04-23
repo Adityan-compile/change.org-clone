@@ -35,8 +35,10 @@ module.exports = {
               .collection(process.env.USER_COLLECTION)
               .insertOne(userData)
               .then((data) => {
-                data.ops[0].status = true;
-                resolve(data.ops[0]);
+                let res = {};
+                res.status = true;
+                res.user = data.ops[0];
+                resolve(res);
               });
           } else {
             data.ops[0].status = false;
@@ -75,6 +77,7 @@ module.exports = {
   },
 
   updateUser: (data, userId) => {
+    console.log(data, userId);
     return new Promise(async (resolve, reject) => {
       let response = {};
       response.status = false;
@@ -90,13 +93,17 @@ module.exports = {
             },
           },
           {
-            returnNewDocument: true
+            returnOriginal: false,
           }
         )
         .then((res) => {  
-          console.log(res);        
-          // (res.nModified != 0) ? (response.status = true) : (response.status = false);
-          resolve(response);
+          if(res.nModified != 0){
+            response.status = true;
+            response.user = res.value;
+            resolve(response);
+          }else{
+         resolve(response);
+          }
         });
     });
   },
@@ -110,7 +117,7 @@ module.exports = {
         .deleteOne({ _id: ObjectId(userId) })
         .then((res) => {
           console.log(res);
-          if (res.acknowledged && res.deletedCount == "1") {
+          if (res.deletedCount === "1") {
             status = true;
             resolve(status);
           } else {

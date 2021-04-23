@@ -26,12 +26,14 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
+ var local = process.env.LOCAL;
+ var ipAddress = ip.address();
+
 
 if (process.env.ENV === 'development'){
-  var ipAddress = ip.address();
-  server.listen(port, ipAddress);
+  server.listen(port, [ipAddress, local]);
  }else{
-  server.listen(port);
+  server.listen(port, local);
  }
 
 server.on("error", onError);
@@ -91,6 +93,6 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
   console.log(`Server listening on port: ${port}`);
-  console.log(`App running at: \n -Local: http://localhost:${port} \n -Network: http://${addr.address}:${port}`)
+  console.log(`App running at: \n -Local: http://${local}:${port} \n -Network: http://${ipAddress}:${port}`)
   debug("Listening on " + bind);
 }
