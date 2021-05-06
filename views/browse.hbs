@@ -1,17 +1,13 @@
-  <section class="browse">
+<section class="browse">
   <h4 class="text-center p-4 mb-2">Browse Petitions</h4>
 
-{{#if petitions}}
-   {{#each petitions}}
-      {{> petitionsCard}}
-   {{/each}}
-{{else}}
-   {{#if loggedIn}}
-   <p class="text-center text-muted">No Petitions Here!! Comeback later or create a new petition:</p>
-   {{> petitionsForm}}
-   {{else}}
-   <p class="text-center text-muted">No Petitions Here!! Comeback later</p>
-   {{/if}}
-{{/if}}
-
+  {{#if petitions}}
+  <div class="row">{{#each petitions}} {{> petitionsCard}} {{/each}}</div>
+  {{else}} {{#if loggedIn}}
+  <p class="text-center text-muted">
+    No Petitions Here!! Comeback later or create a new petition:
+  </p>
+  {{> petitionsForm}} {{else}}
+  <p class="text-center text-muted">No Petitions Here!! Comeback later</p>
+  {{/if}} {{/if}}
 </section>

@@ -1,5 +1,7 @@
 const mongoClient = require("mongodb").mongoClient;
 const db = require("../config/connection");
+const ObjectId = require("mongodb").ObjectID;
+const _ = require("lodash");
 
 module.exports = {
   createPetition: (data, userId) => {
@@ -42,32 +44,39 @@ module.exports = {
     return new Promise(async (resolve, reject) => {
       await db
         .get()
-        .collection(process.env.USER_COLLECTION)
-        .find({ _id: objectId(userId) })
+        .collection(process.env.PETITION_COLLECTION)
+        .find({ _id: ObjectId(id) })
         .toArray()
         .then(async (res) => {
           if (res) {
-            resolve(false);
+            if (res) {
+              var signedUsers = res[0].signedUsers;
+              if (_.includes(signedUsers, userId)) {
+                resolve(false);
+              }
+            } else {
+              await db
+                .get()
+                .collection(process.env.PETITION_COLLECTION)
+                .update(
+                  {
+                    _id: ObjectId(id),
+                  },
+                  {
+                    $inc: {
+                      signed: 1,
+                    },
+                    $push: {
+                      signedUsers: userId,
+                    },
+                  }
+                )
+                .then((response) => {
+                  resolve(true);
+                });
+            }
           } else {
-            await db
-              .get()
-              .collection(process.env.PETITION_COLLECTION)
-              .update(
-                {
-                  _id: ObjectId(id),
-                },
-                {
-                  $inc: {
-                    signed: 1,
-                  },
-                  $push: {
-                    signedUsers: userId,
-                  },
-                }
-              )
-              .then((response) => {
-                resolve(true);
-              });
+            resolve(false);
           }
         });
     });

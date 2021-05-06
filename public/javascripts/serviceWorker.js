@@ -54,7 +54,7 @@ self.addEventListener('fetch', function (event) {
   )
 
 self.addEventListener('activate', function (event) {
-  const cacheAllowlist = ['pages-cache-v1', 'blog-posts-cache-v1']
+  const cacheAllowlist = 'life-cache-v1'
 
   event.waitUntil(
     caches.keys().then(function (cacheNames) {

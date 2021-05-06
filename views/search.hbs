@@ -1,41 +1,46 @@
-  <section class="search">
+<section class="search">
   <h4 class="text-center p-4 mb-2">Search For Petitions</h4>
 
-<div class="search-field p-4">
-	<div class="input-group">
-  <input type="search" class="form-control rounded" id="search" placeholder="Search" aria-label="Search"
-    aria-describedby="search-addon" />
-  <button type="button" class="btn btn-outline-primary" id="searchBtn">search</button>
-</div>
-</div>
+  <div class="search-field p-4">
+    <div class="input-group">
+      <input
+        type="search"
+        class="form-control rounded"
+        id="search"
+        value="{{searchQuery}}"
+        placeholder="Search"
+        aria-label="Search"
+        aria-describedby="search-addon"
+      />
+      <button type="button" class="btn btn-outline-primary" id="searchBtn">
+        search
+      </button>
+    </div>
+  </div>
 
-{{#if results}}
-   {{#each results}}
-      {{> petitionsCard}}
-   {{/each}}
-{{/if}}
-
+  {{#if results}}
+  <div class="row">{{#each results}} {{> petitionsCard}} {{/each}}</div>
+  {{/if}}
 </section>
 
 <script>
-   	  let query = document.getElementById("search");
-      let submitBtn = document.getElementById("searchBtn");
-      let baseUrl = "/petitions/results?search_query=";
-      
-      function submit(){
-      query = query.value;      	
-      let searchUrl = baseUrl+query;
-      console.log(searchUrl);
-      window.location.replace(searchUrl);
-      }
+  let query = document.getElementById("search");
+  let submitBtn = document.getElementById("searchBtn");
+  let baseUrl = "/petitions/results?search_query=";
 
-      submitBtn.addEventListener("click", ()=>{
-           submit();
-      });
-    query.addEventListener('keypress', (e)=> {
-    if (e.key === 'Enter') {
+  function submit() {
+    query = query.value;
+    let searchUrl = baseUrl + query;
+    console.log(searchUrl);
+    window.location.replace(searchUrl);
+  }
+
+  submitBtn.addEventListener("click", () => {
+    submit();
+  });
+  query.addEventListener("keypress", (e) => {
+    if (e.key === "Enter") {
       submit();
     }
-});
-
+  });
 </script>
