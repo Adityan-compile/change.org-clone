@@ -18,7 +18,7 @@
     "email-check": "^1.1.0",
     "express": "~4.16.1",
     "express-flash-message": "^2.0.0",
-    "express-handlebars": "^5.2.0",
+    "express-handlebars": "^5.3.1",
     "express-session": "^1.17.1",
     "express-subdomain": "^1.0.5",
     "handlebars": "^4.7.7",
